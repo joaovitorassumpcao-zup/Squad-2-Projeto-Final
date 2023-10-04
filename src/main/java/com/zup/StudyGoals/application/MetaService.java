@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MetasService {
+public class MetaService {
 
     @Autowired
     MetaRepository metaRepository;

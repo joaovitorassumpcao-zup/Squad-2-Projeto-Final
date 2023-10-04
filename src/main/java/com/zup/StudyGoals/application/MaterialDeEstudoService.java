@@ -1,4 +1,4 @@
 package com.zup.StudyGoals.application;
 
-public class MateriaisDeEstudoService {
+public class MaterialDeEstudoService {
 }
