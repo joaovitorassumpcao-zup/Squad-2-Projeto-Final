@@ -1,4 +1,4 @@
-package domain;
+package com.zup.StudyGoals.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Metas {
+public class Meta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_metas;
+    private Long id;
 
     @Column(nullable = false)
     private String assunto;
@@ -38,7 +39,7 @@ public class Metas {
     private String objetivo;
 
     @OneToMany (mappedBy = "metas", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MateriaisDeEstudo> materiaisDeEstudo = new ArrayList<>();
+    private List<MaterialDeEstudo> materiaisDeEstudo = new ArrayList<>();
 
 
 }

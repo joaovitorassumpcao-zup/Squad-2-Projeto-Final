@@ -1,4 +1,4 @@
-package domain;
+package com.zup.StudyGoals.domain;
 
 public enum Categoria {
 
