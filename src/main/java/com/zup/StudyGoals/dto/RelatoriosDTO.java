@@ -1,4 +1,4 @@
-package dto;
+package com.zup.StudyGoals.dto;
 
 public class RelatoriosDTO {
 

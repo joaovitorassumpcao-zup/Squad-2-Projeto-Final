@@ -1,6 +1,7 @@
-package dto;
+package com.zup.StudyGoals.dto;
 
-import domain.MateriaisDeEstudo;
+
+import com.zup.StudyGoals.domain.MateriaisDeEstudo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

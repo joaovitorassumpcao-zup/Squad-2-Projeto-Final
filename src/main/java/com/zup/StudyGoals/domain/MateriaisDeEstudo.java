@@ -1,4 +1,4 @@
-package domain;
+package com.zup.StudyGoals.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

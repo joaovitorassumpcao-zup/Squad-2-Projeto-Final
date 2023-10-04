@@ -1,6 +1,5 @@
-package dto;
-
-import domain.Categoria;
+package com.zup.StudyGoals.dto;
+import com.zup.StudyGoals.domain.Categoria;
 
 import java.time.LocalDateTime;
 
