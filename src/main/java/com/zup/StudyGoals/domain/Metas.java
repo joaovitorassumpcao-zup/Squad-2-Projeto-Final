@@ -20,24 +20,25 @@ public class Metas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id_metas;
 
     @Column(nullable = false)
-    String assunto;
+    private String assunto;
 
     @Column(nullable = false)
-    LocalDateTime dataDeInicio;
+    private LocalDateTime dataDeInicio;
 
     @Column(nullable = false)
-    LocalDateTime dataFinal;
+    private LocalDateTime dataFinal;
 
     @Column(nullable = false)
-    int metaMinutosDia;
+    private int metaMinutosDia;
 
     @Column(nullable = false)
-    String objetivo;
+    private String objetivo;
 
-    //Estabelecer uma FK(Foreign Key) pra criação de uma tabela de ligação
-    List<MateriaisDeEstudo> materiaisDeEstudoList = new ArrayList<>();
+    @OneToMany (mappedBy = "metas", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MateriaisDeEstudo> materiaisDeEstudo = new ArrayList<>();
+
 
 }
