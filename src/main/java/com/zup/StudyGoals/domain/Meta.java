@@ -1,9 +1,7 @@
 package com.zup.StudyGoals.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,8 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_METAS")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Meta implements Serializable {
@@ -26,9 +23,11 @@ public class Meta implements Serializable {
     @Column(nullable = false)
     private String assunto;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime dataDeInicio;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime dataFinal;
 

@@ -1,4 +1,4 @@
 package com.zup.StudyGoals.presentation;
 
-public class CommandLineApp {
+public class RelatoriosControllerWeb {
 }

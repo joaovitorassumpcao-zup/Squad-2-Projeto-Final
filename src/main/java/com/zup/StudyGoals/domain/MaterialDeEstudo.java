@@ -1,5 +1,6 @@
 package com.zup.StudyGoals.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,9 +35,11 @@ public class MaterialDeEstudo implements Serializable {
     @Column(nullable = false)
     private String resumo;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime dataInicio;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime dataConclusao;
 

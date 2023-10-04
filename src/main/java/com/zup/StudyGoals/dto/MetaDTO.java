@@ -1,15 +1,16 @@
 package com.zup.StudyGoals.dto;
 
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import com.zup.StudyGoals.domain.Meta;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
 public @Data class MetaDTO implements Serializable {
 
     @Setter(AccessLevel.NONE)
@@ -27,4 +28,6 @@ public @Data class MetaDTO implements Serializable {
 
     List<MaterialDeEstudo> materiaisDeEstudoList = new ArrayList<>();
 
+    public MetaDTO(Meta meta) {
+    }
 }
