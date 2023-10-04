@@ -18,24 +18,29 @@ public class MateriaisDeEstudo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id_materiais;
 
     @Column(nullable = false)
-    String titulo;
+    private String titulo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Categoria categoria;
 
     @Column(nullable = false)
-    Categoria categoria;
+    private String url;
 
     @Column(nullable = false)
-    String url;
+    private String resumo;
 
     @Column(nullable = false)
-    String resumo;
+    private LocalDateTime dataInicio;
 
     @Column(nullable = false)
-    LocalDateTime dataInicio;
+    private LocalDateTime dataConclusao;
 
-    @Column(nullable = false)
-    LocalDateTime dataConclusao;
+    @ManyToOne
+    @JoinColumn(name = "meta_materiais_id")
+    private Metas metas;
 
 }

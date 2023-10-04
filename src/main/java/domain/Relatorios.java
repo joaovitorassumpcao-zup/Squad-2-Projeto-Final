@@ -17,24 +17,27 @@ public class Relatorios {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id_relatorios;
 
     @Column(nullable = false)
-    double tempoTotal;
+    private double tempoTotal;
 
     @Column(nullable = false)
-    double mediaTempo;
+    private double mediaTempo;
 
     @Column(nullable = false)
-    int totalResumos;
+    private int totalResumos;
 
     @Column(nullable = false)
-    String categoriaMaisConsumida;
+    private String categoriaMaisConsumida;
 
     @Column(nullable = false)
-    int diasParaConcluir;
+    private int diasParaConcluir;
 
     @Column(nullable = false)
-    boolean metaConcluida;
+    private boolean metaConcluida;
 
+    @ManyToOne
+    @JoinColumn(name = "meta_id")
+    private Metas metas;
 }
