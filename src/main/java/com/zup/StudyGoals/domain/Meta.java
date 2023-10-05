@@ -1,33 +1,34 @@
 package com.zup.StudyGoals.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "TB_METAS")
-@Getter
-@Setter
-@AllArgsConstructor
+
 @NoArgsConstructor
-public class Meta {
+public class Meta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_metas;
+    private Long id;
 
     @Column(nullable = false)
     private String assunto;
 
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime dataDeInicio;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime dataFinal;
 
@@ -40,5 +41,59 @@ public class Meta {
     @OneToMany (mappedBy = "metas", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MaterialDeEstudo> materiaisDeEstudo = new ArrayList<>();
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getAssunto() {
+        return assunto;
+    }
+
+    public LocalDateTime getDataDeInicio() {
+        return dataDeInicio;
+    }
+
+    public LocalDateTime getDataFinal() {
+        return dataFinal;
+    }
+
+    public int getMetaMinutosDia() {
+        return metaMinutosDia;
+    }
+
+    public String getObjetivo() {
+        return objetivo;
+    }
+
+    public List<MaterialDeEstudo> getMateriaisDeEstudo() {
+        return materiaisDeEstudo;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
+    }
+
+    public void setDataDeInicio(LocalDateTime dataDeInicio) {
+        this.dataDeInicio = dataDeInicio;
+    }
+
+    public void setDataFinal(LocalDateTime dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+    public void setMetaMinutosDia(int metaMinutosDia) {
+        this.metaMinutosDia = metaMinutosDia;
+    }
+
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
+    }
+
+    public void setMateriaisDeEstudo(List<MaterialDeEstudo> materiaisDeEstudo) {
+        this.materiaisDeEstudo = materiaisDeEstudo;
+    }
 }

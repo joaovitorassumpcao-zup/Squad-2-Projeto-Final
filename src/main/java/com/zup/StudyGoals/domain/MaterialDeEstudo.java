@@ -1,11 +1,14 @@
 package com.zup.StudyGoals.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,11 +17,12 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MaterialDeEstudo {
+
+public class MaterialDeEstudo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_materiais;
+    private Long id;
 
     @Column(nullable = false)
     private String titulo;
@@ -33,9 +37,11 @@ public class MaterialDeEstudo {
     @Column(nullable = false)
     private String resumo;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime dataInicio;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime dataConclusao;
 
