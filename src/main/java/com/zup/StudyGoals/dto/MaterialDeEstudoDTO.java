@@ -1,6 +1,5 @@
 package com.zup.StudyGoals.dto;
 
-
 import com.zup.StudyGoals.domain.Categoria;
 import lombok.AccessLevel;
 import lombok.Data;

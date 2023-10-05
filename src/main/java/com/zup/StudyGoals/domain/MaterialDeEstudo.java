@@ -1,6 +1,7 @@
 package com.zup.StudyGoals.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class MaterialDeEstudo implements Serializable {
 
     @Id
