@@ -2,6 +2,7 @@ package com.zup.StudyGoals.presentation;
 
 import com.zup.StudyGoals.application.MetaService;
 import com.zup.StudyGoals.application.mapper.MetaDTOMapper;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.dto.MetaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,19 @@ public class MetaControllerWeb {
     }
 
     @PostMapping
-    //ENDPOINT POST
-    public ResponseEntity<?> criarMeta (@RequestBody MetaDTO metaDTO){
+    public ResponseEntity<?> adicionarNovaMeta(@RequestBody MetaDTO metaDTO) {
 
-        Meta novaMeta = MetaDTOMapper.INSTANCE.DTOParaMeta(metaDTO);
-        MetaDTO novaMetaDTO= metaService.cadastrarMeta(new MetaDTO(novaMeta));
+        Meta novaMeta = new Meta();
+        novaMeta.setAssunto(metaDTO.getAssunto());
+        novaMeta.setDataDeInicio(metaDTO.getDataDeInicio());
+        novaMeta.setDataFinal(metaDTO.getDataFinal());
+        novaMeta.setMetaMinutosDia(metaDTO.getMetaMinutosDia());
+        novaMeta.setObjetivo(metaDTO.getObjetivo());
 
-        return ResponseEntity.ok("Nova meta cadastrada com sucesso! " + novaMetaDTO);
+        List<MaterialDeEstudo> materiaisDeEstudo = metaDTO.getMateriaisDeEstudo();
+        metaService.adicionarNovaMetaComMateriais(novaMeta, materiaisDeEstudo);
+
+        return ResponseEntity.ok("Nova meta adicionada com sucesso! " + novaMeta);
     }
 
     //ENDPOINT PUT

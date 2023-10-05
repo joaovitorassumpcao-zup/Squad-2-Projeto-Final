@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -37,8 +38,17 @@ public class Meta implements Serializable {
     @Column(nullable = false)
     private String objetivo;
 
-    @OneToMany (mappedBy = "metas", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "metas", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<MaterialDeEstudo> materiaisDeEstudo = new ArrayList<>();
+
+    public void adiciona(MaterialDeEstudo materialDeEstudo) {
+        this.materiaisDeEstudo.add(materialDeEstudo);
+        materialDeEstudo.setMetas(this);
+    }
+    public List<MaterialDeEstudo> getMateriaisDeEstudo() {
+        List<MaterialDeEstudo> listaSegura = Collections.unmodifiableList(this.materiaisDeEstudo);
+        return listaSegura;
+    }
 
     public Long getId() {
         return id;
@@ -62,10 +72,6 @@ public class Meta implements Serializable {
 
     public String getObjetivo() {
         return objetivo;
-    }
-
-    public List<MaterialDeEstudo> getMateriaisDeEstudo() {
-        return materiaisDeEstudo;
     }
 
     public void setId(Long id) {
@@ -94,5 +100,17 @@ public class Meta implements Serializable {
 
     public void setMateriaisDeEstudo(List<MaterialDeEstudo> materiaisDeEstudo) {
         this.materiaisDeEstudo = materiaisDeEstudo;
+    }
+
+    @Override
+    public String toString() {
+        return "Meta{" +
+                ", assunto='" + assunto + '\'' +
+                ", dataDeInicio=" + dataDeInicio +
+                ", dataFinal=" + dataFinal +
+                ", metaMinutosDia=" + metaMinutosDia +
+                ", objetivo='" + objetivo + '\'' +
+                ", materiaisDeEstudo=" + materiaisDeEstudo +
+                '}';
     }
 }

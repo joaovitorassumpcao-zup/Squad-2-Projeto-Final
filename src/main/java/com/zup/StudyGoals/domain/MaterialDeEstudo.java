@@ -39,9 +39,10 @@ public class MaterialDeEstudo implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataConclusao;
 
-    @ManyToOne
-    @JoinColumn(name = "meta_materiais_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "meta_materiais_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Meta metas;
+
 
     public Long getId() {
         return id;
