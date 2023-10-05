@@ -11,8 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_METAS")
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Meta implements Serializable {
 
@@ -40,5 +38,59 @@ public class Meta implements Serializable {
     @OneToMany (mappedBy = "metas", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MaterialDeEstudo> materiaisDeEstudo = new ArrayList<>();
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getAssunto() {
+        return assunto;
+    }
+
+    public LocalDateTime getDataDeInicio() {
+        return dataDeInicio;
+    }
+
+    public LocalDateTime getDataFinal() {
+        return dataFinal;
+    }
+
+    public int getMetaMinutosDia() {
+        return metaMinutosDia;
+    }
+
+    public String getObjetivo() {
+        return objetivo;
+    }
+
+    public List<MaterialDeEstudo> getMateriaisDeEstudo() {
+        return materiaisDeEstudo;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
+    }
+
+    public void setDataDeInicio(LocalDateTime dataDeInicio) {
+        this.dataDeInicio = dataDeInicio;
+    }
+
+    public void setDataFinal(LocalDateTime dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+    public void setMetaMinutosDia(int metaMinutosDia) {
+        this.metaMinutosDia = metaMinutosDia;
+    }
+
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
+    }
+
+    public void setMateriaisDeEstudo(List<MaterialDeEstudo> materiaisDeEstudo) {
+        this.materiaisDeEstudo = materiaisDeEstudo;
+    }
 }

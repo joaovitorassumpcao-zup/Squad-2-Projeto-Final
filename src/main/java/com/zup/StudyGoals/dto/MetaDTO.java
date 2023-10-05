@@ -1,33 +1,89 @@
 package com.zup.StudyGoals.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
-import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-public @Data class MetaDTO implements Serializable {
 
-    @Setter(AccessLevel.NONE)
-    Long id;
+public class MetaDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    String assunto;
+    private String assunto;
 
-    LocalDateTime dataDeInicio;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dataDeInicio;
 
-    LocalDateTime dataFinal;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dataFinal;
 
-    int metaMinutosDia;
+    private int metaMinutosDia;
 
-    String objetivo;
+    private String objetivo;
 
-    List<MaterialDeEstudo> materiaisDeEstudoList = new ArrayList<>();
+    private List<MaterialDeEstudo> materiaisDeEstudoList;
 
-    public MetaDTO(Meta meta) {
+    public MetaDTO (Meta meta){
+        this.assunto = meta.getAssunto();
+        this.dataDeInicio = meta.getDataDeInicio();
+        this.dataFinal = meta.getDataFinal();
+        this.metaMinutosDia = meta.getMetaMinutosDia();
+        this.objetivo = meta.getObjetivo();
+        this.materiaisDeEstudoList = meta.getMateriaisDeEstudo();
+    }
+
+    public MetaDTO() {
+
+    }
+
+    public String getAssunto() {
+        return assunto;
+    }
+
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
+    }
+
+    public LocalDateTime getDataDeInicio() {
+        return dataDeInicio;
+    }
+
+    public void setDataDeInicio(LocalDateTime dataDeInicio) {
+        this.dataDeInicio = dataDeInicio;
+    }
+
+    public LocalDateTime getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(LocalDateTime dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+
+    public int getMetaMinutosDia() {
+        return metaMinutosDia;
+    }
+
+    public void setMetaMinutosDia(int metaMinutosDia) {
+        this.metaMinutosDia = metaMinutosDia;
+    }
+
+    public String getObjetivo() {
+        return objetivo;
+    }
+
+    public void setObjetivo(String objetivo) {
+        this.objetivo = objetivo;
+    }
+
+    public List<MaterialDeEstudo> getMateriaisDeEstudoList() {
+        return materiaisDeEstudoList;
+    }
+
+    public void setMateriaisDeEstudoList(List<MaterialDeEstudo> materiaisDeEstudoList) {
+        this.materiaisDeEstudoList = materiaisDeEstudoList;
     }
 }
