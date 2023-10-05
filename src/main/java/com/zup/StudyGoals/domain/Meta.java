@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_METAS")
-
 @NoArgsConstructor
 public class Meta implements Serializable {
 

@@ -1,24 +1,25 @@
 package com.zup.StudyGoals.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zup.StudyGoals.domain.Categoria;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.zup.StudyGoals.domain.Meta;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+
 public class MaterialDeEstudoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String titulo;
     private Categoria categoria;
     private String url;
     private String resumo;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataInicio;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataConclusao;
+    private Meta metas;
 
     public MaterialDeEstudoDTO (MaterialDeEstudo materialDeEstudo){
         this.titulo = materialDeEstudo.getTitulo();
@@ -27,9 +28,63 @@ public class MaterialDeEstudoDTO implements Serializable {
         this.resumo = materialDeEstudo.getResumo();
         this.dataInicio = materialDeEstudo.getDataInicio();
         this.dataConclusao = materialDeEstudo.getDataConclusao();
+        this.metas = materialDeEstudo.getMetas();
     }
 
     public MaterialDeEstudoDTO (){
 
+    }
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getResumo() {
+        return resumo;
+    }
+
+    public void setResumo(String resumo) {
+        this.resumo = resumo;
+    }
+
+    public LocalDateTime getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(LocalDateTime dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public LocalDateTime getDataConclusao() {
+        return dataConclusao;
+    }
+
+    public void setDataConclusao(LocalDateTime dataConclusao) {
+        this.dataConclusao = dataConclusao;
+    }
+    public Meta getMetas() {
+        return metas;
+    }
+    public void setMetas(Meta metas) {
+        this.metas = metas;
     }
 }
