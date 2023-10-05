@@ -1,4 +1,4 @@
 package com.zup.StudyGoals.presentation;
 
-public class MetasControllerWeb {
+public class RelatorioControllerWeb {
 }

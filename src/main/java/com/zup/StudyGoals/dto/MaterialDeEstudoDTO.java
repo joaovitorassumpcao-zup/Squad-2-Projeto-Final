@@ -3,7 +3,7 @@ import com.zup.StudyGoals.domain.Categoria;
 
 import java.time.LocalDateTime;
 
-public class MateriaisDeEstudoDTO {
+public class MaterialDeEstudoDTO {
 
     Long id;
 

@@ -7,38 +7,40 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "TB_METAS")
+@Table(name = "TB_MATERIAISDEESTUDO")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Metas {
+public class MaterialDeEstudo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_metas;
+    private Long id_materiais;
 
     @Column(nullable = false)
-    private String assunto;
+    private String titulo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Categoria categoria;
 
     @Column(nullable = false)
-    private LocalDateTime dataDeInicio;
+    private String url;
 
     @Column(nullable = false)
-    private LocalDateTime dataFinal;
+    private String resumo;
 
     @Column(nullable = false)
-    private int metaMinutosDia;
+    private LocalDateTime dataInicio;
 
     @Column(nullable = false)
-    private String objetivo;
+    private LocalDateTime dataConclusao;
 
-    @OneToMany (mappedBy = "metas", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MateriaisDeEstudo> materiaisDeEstudo = new ArrayList<>();
-
+    @ManyToOne
+    @JoinColumn(name = "meta_materiais_id")
+    private Meta metas;
 
 }

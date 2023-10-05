@@ -6,41 +6,38 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TB_MATERIAISDEESTUDO")
+@Table(name = "TB_RELATORIOS")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MateriaisDeEstudo {
+public class Relatorio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_materiais;
+    private Long id_relatorios;
 
     @Column(nullable = false)
-    private String titulo;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Categoria categoria;
+    private double tempoTotal;
 
     @Column(nullable = false)
-    private String url;
+    private double mediaTempo;
 
     @Column(nullable = false)
-    private String resumo;
+    private int totalResumos;
 
     @Column(nullable = false)
-    private LocalDateTime dataInicio;
+    private String categoriaMaisConsumida;
 
     @Column(nullable = false)
-    private LocalDateTime dataConclusao;
+    private int diasParaConcluir;
+
+    @Column(nullable = false)
+    private boolean metaConcluida;
 
     @ManyToOne
-    @JoinColumn(name = "meta_materiais_id")
-    private Metas metas;
-
+    @JoinColumn(name = "meta_id")
+    private Meta metas;
 }

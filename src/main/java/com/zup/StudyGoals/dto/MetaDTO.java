@@ -1,13 +1,13 @@
 package com.zup.StudyGoals.dto;
 
 
-import com.zup.StudyGoals.domain.MateriaisDeEstudo;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MetasDTO {
+public class MetaDTO {
 
     Long id;
 
@@ -21,6 +21,6 @@ public class MetasDTO {
 
     String objetivo;
 
-    List<MateriaisDeEstudo> materiaisDeEstudoList = new ArrayList<>();
+    List<MaterialDeEstudo> materiaisDeEstudoList = new ArrayList<>();
 
 }

@@ -1,6 +1,6 @@
 package com.zup.StudyGoals.dto;
 
-public class RelatoriosDTO {
+public class RelatorioDTO {
 
     Long id;
 

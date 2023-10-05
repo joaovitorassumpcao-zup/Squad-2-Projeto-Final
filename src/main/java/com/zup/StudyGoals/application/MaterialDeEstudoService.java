@@ -1,7 +1,7 @@
 package com.zup.StudyGoals.application;
 
-import com.zup.StudyGoals.data.MateriaisDeEstudoRepository;
-import com.zup.StudyGoals.domain.MateriaisDeEstudo;
+import com.zup.StudyGoals.data.MaterialDeEstudoRepository;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,32 +9,32 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MateriaisDeEstudoService {
+public class MaterialDeEstudoService {
 
     //ToDo atualizar com os DTOs
 
     @Autowired
-    MateriaisDeEstudoRepository materiaisDeEstudoRepository;
+    MaterialDeEstudoRepository materiaisDeEstudoRepository;
 
     //Listar Materiais
-    public List<MateriaisDeEstudo> listarMateriais() {
+    public List<MaterialDeEstudo> listarMateriais() {
         return materiaisDeEstudoRepository.findAll();
     }
 
     //Buscar Material Por Id
-    public Optional<MateriaisDeEstudo> buscarMaterialPorId(Long id) {
-        Optional<MateriaisDeEstudo> materiaisDeEstudo = materiaisDeEstudoRepository.findById(id);
+    public Optional<MaterialDeEstudo> buscarMaterialPorId(Long id) {
+        Optional<MaterialDeEstudo> materiaisDeEstudo = materiaisDeEstudoRepository.findById(id);
         return materiaisDeEstudo;
     }
 
     //Cadastrar Material
-    public MateriaisDeEstudo cadastrarMaterial(MateriaisDeEstudo materiaisDeEstudo) {
+    public MaterialDeEstudo cadastrarMaterial(MaterialDeEstudo materiaisDeEstudo) {
         return materiaisDeEstudoRepository.save(materiaisDeEstudo);
     }
 
     //Alterar Material
-    public MateriaisDeEstudo alterarMaterial (Long id, MateriaisDeEstudo materiaisDeEstudo) {
-        MateriaisDeEstudo materiaisDeEstudo1 = materiaisDeEstudoRepository.findById(id).get();
+    public MaterialDeEstudo alterarMaterial (Long id, MaterialDeEstudo materiaisDeEstudo) {
+        MaterialDeEstudo materiaisDeEstudo1 = materiaisDeEstudoRepository.findById(id).get();
 
         if (materiaisDeEstudo.getTitulo() != null) {
             materiaisDeEstudo1.setTitulo(materiaisDeEstudo.getTitulo());
