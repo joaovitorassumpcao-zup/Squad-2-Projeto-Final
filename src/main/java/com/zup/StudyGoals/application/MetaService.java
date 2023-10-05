@@ -65,6 +65,9 @@ public class MetaService {
         if(meta != null){
             meta.setObjetivo(metas.getObjetivo());
         }
+        if(meta != null) {
+            meta.setMateriaisDeEstudo(metas.getMateriaisDeEstudo());
+        }
 
         return metaRepository.save(meta);
     }
