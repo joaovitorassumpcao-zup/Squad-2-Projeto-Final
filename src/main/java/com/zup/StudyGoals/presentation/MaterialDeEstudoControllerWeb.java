@@ -5,10 +5,12 @@ import com.zup.StudyGoals.application.mapper.MaterialDeEstudoDTOMapper;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping (path = "/api/materiais")
@@ -24,9 +26,15 @@ public class MaterialDeEstudoControllerWeb {
         return materialDeEstudoService.listarMateriais();
     }
 
-    // TODO
     // get by id
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarMaterialPorId(@PathVariable Long id){
 
+        Optional<MaterialDeEstudoDTO> material = materialDeEstudoService.buscarMaterialPorId(id);
+        if(material.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O material não foi encontrado. ");
+
+        return ResponseEntity.ok().body(material);
+    }
     //ENDPOINT POST
     @PostMapping
     public ResponseEntity<?> criarMaterial (@RequestBody MaterialDeEstudoDTO materialDeEstudoDTO){
@@ -38,10 +46,20 @@ public class MaterialDeEstudoControllerWeb {
 
     }
 
-    // TODO
     //ENDPOINT PUT
+    @PutMapping("/{id}")
+    public ResponseEntity<?> alterarMaterial(@PathVariable Long id, @RequestBody MaterialDeEstudo materialDeEstudo){
 
-    //TODO
+        MaterialDeEstudo materialAlterado = materialDeEstudoService.alterarMaterial(id,materialDeEstudo);
+
+        if(materialDeEstudo != null) return ResponseEntity.ok().body("Material de estudo editado com sucesso! " + materialAlterado);
+
+        return ResponseEntity.notFound().build();
+    }
+
     //ENDPOINT DELETE
-
+    @DeleteMapping("/{id}")
+    public void deletarMaterial (@PathVariable Long id) {
+        materialDeEstudoService.deletarMaterial(id);
+    }
 }
