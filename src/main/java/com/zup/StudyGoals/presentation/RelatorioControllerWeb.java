@@ -1,6 +1,8 @@
 package com.zup.StudyGoals.presentation;
 
+import com.zup.StudyGoals.application.MetaService;
 import com.zup.StudyGoals.application.RelatorioService;
+import com.zup.StudyGoals.dto.MetaDTO;
 import com.zup.StudyGoals.dto.RelatorioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -16,6 +19,9 @@ public class RelatorioControllerWeb {
 
     @Autowired
     RelatorioService relatorioService;
+
+    @Autowired
+    MetaService metaService;
 
     @GetMapping
     public ResponseEntity<List<RelatorioDTO>> listarRelatorios() {
@@ -35,13 +41,13 @@ public class RelatorioControllerWeb {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrarRelatorio(RelatorioDTO relatorioDTO) {
-        relatorioService.cadastrarRelatorio(relatorioDTO);
+    public ResponseEntity<?> cadastrarRelatorio(@PathVariable Long idMeta, @RequestBody RelatorioDTO relatorioDTO) {
+        relatorioService.cadastrarRelatorio(idMeta, relatorioDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> alterarRelatorio(@PathVariable Long id, RelatorioDTO relatorioDTO) {
+    public ResponseEntity<?> alterarRelatorio(@PathVariable Long id, @RequestBody RelatorioDTO relatorioDTO) {
         Optional<RelatorioDTO> optionalRelatorioDTO = relatorioService
                 .alterarRelatorio(id, relatorioDTO);
         if (optionalRelatorioDTO.isPresent()) return ResponseEntity.ok(optionalRelatorioDTO.get());
@@ -52,6 +58,22 @@ public class RelatorioControllerWeb {
     public ResponseEntity<?> deletarRelatorio(@PathVariable Long id) {
         relatorioService.deletarRelatorio(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/metaconcluida/{id}")
+    public ResponseEntity<?> metaFoiConcluida(@PathVariable Long id){
+        Optional<MetaDTO> metaDTOOptional =
+                metaService.buscarMetaPorId(id);
+
+        if (metaDTOOptional.isPresent()) {
+
+            MetaDTO metaDTO = metaDTOOptional.orElseThrow(() -> new NoSuchElementException("Optional está vazio"));
+            return ResponseEntity.ok(relatorioService.metaFoiConcluida(metaDTO));
+
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Meta não encontrada.");
+        }
     }
 
 }
