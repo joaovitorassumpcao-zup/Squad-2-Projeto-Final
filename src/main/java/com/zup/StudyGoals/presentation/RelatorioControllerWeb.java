@@ -41,13 +41,13 @@ public class RelatorioControllerWeb {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrarRelatorio(RelatorioDTO relatorioDTO) {
-        relatorioService.cadastrarRelatorio(relatorioDTO);
+    public ResponseEntity<?> cadastrarRelatorio(@PathVariable Long idMeta, @RequestBody RelatorioDTO relatorioDTO) {
+        relatorioService.cadastrarRelatorio(idMeta, relatorioDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> alterarRelatorio(@PathVariable Long id, RelatorioDTO relatorioDTO) {
+    public ResponseEntity<?> alterarRelatorio(@PathVariable Long id, @RequestBody RelatorioDTO relatorioDTO) {
         Optional<RelatorioDTO> optionalRelatorioDTO = relatorioService
                 .alterarRelatorio(id, relatorioDTO);
         if (optionalRelatorioDTO.isPresent()) return ResponseEntity.ok(optionalRelatorioDTO.get());

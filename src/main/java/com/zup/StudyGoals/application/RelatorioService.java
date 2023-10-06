@@ -1,7 +1,9 @@
 package com.zup.StudyGoals.application;
 
 import com.zup.StudyGoals.application.mapper.RelatorioDTOMapper;
+import com.zup.StudyGoals.data.MetaRepository;
 import com.zup.StudyGoals.data.RelatorioRepository;
+import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
 import com.zup.StudyGoals.dto.MetaDTO;
@@ -22,6 +24,9 @@ public class RelatorioService {
     @Autowired
     RelatorioRepository relatorioRepository;
 
+    @Autowired
+    MetaRepository metaRepository;
+
     public List<RelatorioDTO> listarRelatorios() {
         return relatorioRepository
                 .findAll()
@@ -35,14 +40,22 @@ public class RelatorioService {
                 .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO);
     }
 
-    public RelatorioDTO cadastrarRelatorio(RelatorioDTO relatorioDTO) {
+    public RelatorioDTO cadastrarRelatorio(Long idMeta, RelatorioDTO relatorioDTO) {
+         if (idMeta != null) {
+             Optional<Meta> meta = metaRepository.findById(idMeta);
+
+             if (meta.isPresent()) {
+                 relatorioDTO.setTempoTotal(calcularTempoTotalDedicado());
+             }
+         }
+
         //Optional<Relatorio> relatorioOptional = relatorioRepository
         //        .findById(relatorioDTO.getId());
         //if (relatorioOptional.isPresent()) return new Error();
         //else {
-            relatorioRepository
-                    .save(RelatorioDTOMapper.INSTANCE.DTOParaRelatorio(relatorioDTO));
-            return relatorioDTO;
+//            relatorioRepository
+//                    .save(RelatorioDTOMapper.INSTANCE.DTOParaRelatorio(relatorioDTO));
+//            return relatorioDTO;
         //}
     }
 
@@ -116,7 +129,11 @@ public class RelatorioService {
     }
 
     //Calcular Tempo Total Dedicado
-    public long calcularTempoTotalDedicado(MetaDTO metaDTO, MaterialDeEstudoDTO materialDeEstudoDTO) {
+    public long calcularTempoTotalDedicado() {
+
+        MetaDTO metaDTO = new MetaDTO();
+        MaterialDeEstudoDTO materialDeEstudoDTO = new MaterialDeEstudoDTO();
+
         long duracaoMinutos = 0L;
 
         while (!metaDTO.getMateriaisDeEstudo().isEmpty()) {
@@ -128,8 +145,8 @@ public class RelatorioService {
     }
 
     //Calcular Média de Tempo Diária
-    public long calcularMediaTempoDiaria(MetaDTO metaDTO, MaterialDeEstudoDTO materialDeEstudoDTO) {
-        long tempoTotal = calcularTempoTotalDedicado(metaDTO, materialDeEstudoDTO);
+    public long calcularMediaTempoDiaria() {
+        long tempoTotal = calcularTempoTotalDedicado();
         if (tempoTotal <= 1440) {
             return tempoTotal;
         }
