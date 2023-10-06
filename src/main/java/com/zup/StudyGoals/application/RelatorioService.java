@@ -65,39 +65,54 @@ public class RelatorioService {
         relatorioRepository.deleteById(id);
     }
 
-    public Boolean metaFoiConcluida(MetaDTO metaDTO) {
-        if (metaDTO.getDataFinal().isBefore(LocalDateTime.now())) return Boolean.TRUE;
+    public Boolean metaFoiConcluida(Long id) {
+
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
+
+        if (meta.getDataFinal().isBefore(LocalDateTime.now())) return Boolean.TRUE;
         else return Boolean.FALSE;
     }
 
-    public Long calcularDiasParaMeta(MetaDTO metaDTO) {
+    public int calcularDiasParaMeta(Long id) {
+
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
+
         Duration duracao = Duration
-                .between(LocalDateTime.now(), metaDTO.getDataFinal());
-        return duracao.toDays();
+                .between(LocalDateTime.now(), meta.getDataFinal());
+
+        int dias = (int) duracao.toDays();
+
+        return dias;
     }
 
     //Calcular Categorias Mais Consumidas
-    public String calcularCategoriasMaisConsumidas(MetaDTO metaDTO, MaterialDeEstudoDTO materialDeEstudoDTO) {
+    public String calcularCategoriasMaisConsumidas(Long id) {
+
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
+
         int artigos = 0;
         int videos = 0;
         int audios = 0;
         int workshops = 0;
         int livros = 0;
 
-        for (int i = 0; !metaDTO.getMateriaisDeEstudo().isEmpty(); i++) {
-            if (metaDTO.getMateriaisDeEstudo().get(i).equals("ARTIGO")){
+        for (int i = 0; !meta.getMateriaisDeEstudo().isEmpty(); i++) {
+            if (meta.getMateriaisDeEstudo().get(i).equals("ARTIGO")){
                 artigos += 1;
             }
-            if (metaDTO.getMateriaisDeEstudo().get(i).equals("VIDEO")){
+            if (meta.getMateriaisDeEstudo().get(i).equals("VIDEO")){
                 videos += 1;
             }
-            if (metaDTO.getMateriaisDeEstudo().get(i).equals("AUDIO")){
+            if (meta.getMateriaisDeEstudo().get(i).equals("AUDIO")){
                 audios += 1;
             }
-            if (metaDTO.getMateriaisDeEstudo().get(i).equals("WORKSHOP")){
+            if (meta.getMateriaisDeEstudo().get(i).equals("WORKSHOP")){
                 workshops += 1;
             }
-            if (metaDTO.getMateriaisDeEstudo().get(i).equals("LIVRO")){
+            if (meta.getMateriaisDeEstudo().get(i).equals("LIVRO")){
                 livros += 1;
             }
         }
@@ -121,14 +136,16 @@ public class RelatorioService {
     }
 
     //Calcular Tempo Total Dedicado
-    public long calcularTempoTotalDedicado() {
+    public double calcularTempoTotalDedicado(Long id) {
 
-        MetaDTO metaDTO = new MetaDTO();
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
+
         MaterialDeEstudoDTO materialDeEstudoDTO = new MaterialDeEstudoDTO();
 
-        long duracaoMinutos = 0L;
+        double duracaoMinutos = 0.0;
 
-        while (!metaDTO.getMateriaisDeEstudo().isEmpty()) {
+        while (!meta.getMateriaisDeEstudo().isEmpty()) {
             Duration duration = Duration.between(materialDeEstudoDTO.getDataInicio(), materialDeEstudoDTO.getDataConclusao());
             duracaoMinutos += (duration.getSeconds() * 60);
         }
@@ -137,8 +154,8 @@ public class RelatorioService {
     }
 
     //Calcular Média de Tempo Diária
-    public long calcularMediaTempoDiaria() {
-        long tempoTotal = calcularTempoTotalDedicado();
+    public double calcularMediaTempoDiaria(Long id) {
+        double tempoTotal = calcularTempoTotalDedicado(id);
         if (tempoTotal <= 1440) {
             return tempoTotal;
         }
@@ -155,9 +172,13 @@ public class RelatorioService {
     }
 
     //Calcular Resumos Feitos
-    public int calcularResumosFeitos(MetaDTO metaDTO) {
+    public int calcularResumosFeitos(Long id) {
+
+        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
+
         int resumosFeitos = 0;
-        while (!metaDTO.getMateriaisDeEstudo().isEmpty()) {
+        while (!meta.getMateriaisDeEstudo().isEmpty()) {
             resumosFeitos += 1;
         }
         return resumosFeitos;

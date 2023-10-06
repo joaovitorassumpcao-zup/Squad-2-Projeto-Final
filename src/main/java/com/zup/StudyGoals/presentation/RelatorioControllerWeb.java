@@ -41,8 +41,8 @@ public class RelatorioControllerWeb {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastrarRelatorio(@PathVariable Long idMeta, @RequestBody RelatorioDTO relatorioDTO) {
-        relatorioService.cadastrarRelatorio(idMeta, relatorioDTO);
+    public ResponseEntity<?> cadastrarRelatorio(@RequestBody RelatorioDTO relatorioDTO) {
+        relatorioService.cadastrarRelatorio(relatorioDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -60,20 +60,36 @@ public class RelatorioControllerWeb {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/metaconcluida/{id}")
-    public ResponseEntity<?> metaFoiConcluida(@PathVariable Long id){
-        Optional<MetaDTO> metaDTOOptional =
-                metaService.buscarMetaPorId(id);
+//    @GetMapping("/metaconcluida/{id}")
+//    public ResponseEntity<?> metaFoiConcluida(@PathVariable Long id){
+//        Optional<MetaDTO> metaDTOOptional =
+//                metaService.buscarMetaPorId(id);
+//
+//        if (metaDTOOptional.isPresent()) {
+//
+//            MetaDTO metaDTO = metaDTOOptional.orElseThrow(() -> new NoSuchElementException("Optional está vazio"));
+//            return ResponseEntity.ok(relatorioService.metaFoiConcluida(metaDTO));
+//
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                    .body("Meta não encontrada.");
+//        }
+//    }
 
-        if (metaDTOOptional.isPresent()) {
+    @GetMapping("/relatoriotemp/{id}")
+    public ResponseEntity<RelatorioDTO> relatorioTemporario(@PathVariable Long id) {
+        double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
+        double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);
+        int totalResumos = relatorioService.calcularResumosFeitos(id);
+        String categoriaMaisConsumida = relatorioService.calcularCategoriasMaisConsumidas(id);
+        int diasParaConcluir = relatorioService.calcularDiasParaMeta(id);
+        boolean metaConcluida = relatorioService.metaFoiConcluida(id);
 
-            MetaDTO metaDTO = metaDTOOptional.orElseThrow(() -> new NoSuchElementException("Optional está vazio"));
-            return ResponseEntity.ok(relatorioService.metaFoiConcluida(metaDTO));
+        RelatorioDTO relatorioDTO = new RelatorioDTO(tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
+                diasParaConcluir, metaConcluida);
 
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Meta não encontrada.");
-        }
+        return ResponseEntity.ok(relatorioDTO);
+
     }
 
 }
