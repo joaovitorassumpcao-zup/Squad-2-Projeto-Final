@@ -51,7 +51,7 @@ public class MetaControllerWeb {
         metaService.adicionarNovaMetaComMateriais(novaMeta, materiaisDeEstudo);
 
         return ResponseEntity.ok("Nova meta adicionada com sucesso! " + novaMeta);
-        
+
     }
 
     //ENDPOINT PUT
