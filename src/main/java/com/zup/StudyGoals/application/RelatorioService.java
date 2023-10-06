@@ -40,23 +40,11 @@ public class RelatorioService {
                 .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO);
     }
 
-    public RelatorioDTO cadastrarRelatorio(Long idMeta, RelatorioDTO relatorioDTO) {
-         if (idMeta != null) {
-             Optional<Meta> meta = metaRepository.findById(idMeta);
-
-             if (meta.isPresent()) {
-                 relatorioDTO.setTempoTotal(calcularTempoTotalDedicado());
-             }
-         }
-
-        //Optional<Relatorio> relatorioOptional = relatorioRepository
-        //        .findById(relatorioDTO.getId());
-        //if (relatorioOptional.isPresent()) return new Error();
-        //else {
-//            relatorioRepository
-//                    .save(RelatorioDTOMapper.INSTANCE.DTOParaRelatorio(relatorioDTO));
-//            return relatorioDTO;
-        //}
+    public RelatorioDTO cadastrarRelatorio(RelatorioDTO relatorioDTO) {
+        Relatorio relatorio = new Relatorio();
+        BeanUtils.copyProperties(relatorioDTO, relatorio);
+        relatorioRepository.save(relatorio);
+         return relatorioDTO;
     }
 
     public Optional<RelatorioDTO> alterarRelatorio(Long id, RelatorioDTO relatorioDTO) {
@@ -89,7 +77,7 @@ public class RelatorioService {
     }
 
     //Calcular Categorias Mais Consumidas
-    public List<?> calcularCategoriasMaisConsumidas(MetaDTO metaDTO, MaterialDeEstudoDTO materialDeEstudoDTO) {
+    public String calcularCategoriasMaisConsumidas(MetaDTO metaDTO, MaterialDeEstudoDTO materialDeEstudoDTO) {
         int artigos = 0;
         int videos = 0;
         int audios = 0;
@@ -125,7 +113,11 @@ public class RelatorioService {
 
         categoriasOrdem.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
 
-        return categoriasOrdem;
+        Map.Entry<String, Integer> primeiroPar = categoriasOrdem.get(0);
+
+        String maisConsumida = primeiroPar.getKey() + " (" + primeiroPar.getValue() + ")";
+
+        return maisConsumida;
     }
 
     //Calcular Tempo Total Dedicado
