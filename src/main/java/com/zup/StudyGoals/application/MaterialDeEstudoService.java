@@ -74,10 +74,6 @@ public class MaterialDeEstudoService {
             materialDeEstudo1.setDataConclusao(materiaisDeEstudo.getDataConclusao());
         }
 
-        if (materiaisDeEstudo.getMetas() != null) {
-            materialDeEstudo1.setMetas(materiaisDeEstudo.getMetas());
-        }
-
         return materialDeEstudoRepository.save(materialDeEstudo1);
 
     }
