@@ -1,12 +1,13 @@
 package com.zup.StudyGoals.application;
 
-import com.zup.StudyGoals.application.mapper.MaterialDeEstudoDTOMapper;
 import com.zup.StudyGoals.data.MaterialDeEstudoRepository;
+import com.zup.StudyGoals.data.MetaRepository;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
+import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
-import com.zup.StudyGoals.dto.MetaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,9 @@ public class MaterialDeEstudoService {
 
     @Autowired
     MaterialDeEstudoRepository materialDeEstudoRepository;
+
+    @Autowired
+    MetaRepository metaRepository;
 
     //Listar Materiais
     public List<MaterialDeEstudoDTO> listarMateriais() {
@@ -39,11 +43,25 @@ public class MaterialDeEstudoService {
         return Optional.empty();
     }
 
+    public Meta adiconarMetaParaMaterial (Long idMeta) {
+        if (idMeta != null) {
+            Optional<Meta> meta = metaRepository.findById(idMeta);
+
+            if (meta.isPresent()) {
+                return meta.get();
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
     //Cadastrar Material
-    public MaterialDeEstudoDTO cadastrarMaterial(MaterialDeEstudoDTO materialDeEstudoDTO) {
-        MaterialDeEstudo novoMaterial = MaterialDeEstudoDTOMapper.INSTANCE.DTOParaMaterialDeEstudo(materialDeEstudoDTO);
-        materialDeEstudoRepository.save(novoMaterial);
-        return new MaterialDeEstudoDTO(novoMaterial);
+    @Transactional
+    public void cadastrarMaterial(MaterialDeEstudo materialDeEstudo, Long idMeta) {
+
+        Meta meta = adiconarMetaParaMaterial(idMeta);
+        materialDeEstudo.setMetas(meta);
+
+        materialDeEstudoRepository.save(materialDeEstudo);
     }
 
     //Alterar Material
