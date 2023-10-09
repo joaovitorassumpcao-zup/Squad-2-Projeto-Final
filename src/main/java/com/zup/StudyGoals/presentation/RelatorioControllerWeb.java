@@ -40,6 +40,7 @@ public class RelatorioControllerWeb {
                 .body("Relatorio não encontrado.");
     }
 
+    //O post deve ser feito usando o JSON gerado pelo método relatorioTemporario caso o usuário deseje salvar o relatório no banco de dados
     @PostMapping
     public ResponseEntity<?> cadastrarRelatorio(@RequestBody RelatorioDTO relatorioDTO) {
         relatorioService.cadastrarRelatorio(relatorioDTO);
@@ -60,23 +61,8 @@ public class RelatorioControllerWeb {
         return ResponseEntity.noContent().build();
     }
 
-//    @GetMapping("/metaconcluida/{id}")
-//    public ResponseEntity<?> metaFoiConcluida(@PathVariable Long id){
-//        Optional<MetaDTO> metaDTOOptional =
-//                metaService.buscarMetaPorId(id);
-//
-//        if (metaDTOOptional.isPresent()) {
-//
-//            MetaDTO metaDTO = metaDTOOptional.orElseThrow(() -> new NoSuchElementException("Optional está vazio"));
-//            return ResponseEntity.ok(relatorioService.metaFoiConcluida(metaDTO));
-//
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                    .body("Meta não encontrada.");
-//        }
-//    }
-
-    @GetMapping("/relatoriotemp/{id}")
+    //Método que gera um relatório temporário para a visualização dos status da meta
+    @GetMapping("/relatoriotemp/{id} ")
     public ResponseEntity<RelatorioDTO> relatorioTemporario(@PathVariable Long id) {
         double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
         double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);

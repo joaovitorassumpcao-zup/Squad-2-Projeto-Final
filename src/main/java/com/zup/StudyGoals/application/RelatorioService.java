@@ -6,13 +6,11 @@ import com.zup.StudyGoals.data.RelatorioRepository;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
-import com.zup.StudyGoals.dto.MetaDTO;
 import com.zup.StudyGoals.dto.RelatorioDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -87,7 +85,6 @@ public class RelatorioService {
         return dias;
     }
 
-    //Calcular Categorias Mais Consumidas
     public String calcularCategoriasMaisConsumidas(Long id) {
 
         Optional<Meta> optionalMeta = metaRepository.findById(id);
@@ -135,7 +132,6 @@ public class RelatorioService {
         return maisConsumida;
     }
 
-    //Calcular Tempo Total Dedicado
     public double calcularTempoTotalDedicado(Long id) {
 
         Optional<Meta> optionalMeta = metaRepository.findById(id);
@@ -153,7 +149,6 @@ public class RelatorioService {
         return duracaoMinutos;
     }
 
-    //Calcular Média de Tempo Diária
     public double calcularMediaTempoDiaria(Long id) {
         double tempoTotal = calcularTempoTotalDedicado(id);
         if (tempoTotal <= 1440) {
@@ -171,7 +166,6 @@ public class RelatorioService {
 
     }
 
-    //Calcular Resumos Feitos
     public int calcularResumosFeitos(Long id) {
 
         Optional<Meta> optionalMeta = metaRepository.findById(id);
