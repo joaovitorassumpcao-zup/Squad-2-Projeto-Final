@@ -67,7 +67,7 @@ class MetaServiceTest {
     }
 
     @Test
-    void testeBuscarMetaPorId() throws Exception{
+    void testeEncontraMetaPorId() throws Exception{
 
         MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
         List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
@@ -90,6 +90,18 @@ class MetaServiceTest {
 
     }
 
+    @Test
+    void testeNaoEncotraMetaPorId (){
+
+        Long id = 2L;
+
+        when(metaRepository.findById(id)).thenReturn(Optional.empty());
+        Optional<MetaDTO> resultado = metaService.buscarMetaPorId(id);
+
+        verify(metaRepository, times(1)).findById(id);
+        assertFalse(resultado.isPresent());
+    }
+
     @Disabled
     @Test
     void adicionarNovaMetaComMateriais() throws Exception{
@@ -100,8 +112,10 @@ class MetaServiceTest {
     void editarMeta() throws Exception{
     }
 
-    @Disabled
     @Test
-    void deletarMeta() throws Exception{
+    void testeDeletarMeta() throws Exception{
+        Long id = 1L;
+        metaService.deletarMeta(id);
+        verify(metaRepository, times(1)).deleteById(id);
     }
 }
