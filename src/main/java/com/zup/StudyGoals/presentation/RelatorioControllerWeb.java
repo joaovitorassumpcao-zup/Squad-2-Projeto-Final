@@ -40,9 +40,10 @@ public class RelatorioControllerWeb {
                 .body("Relatorio não encontrado.");
     }
 
+    //O post deve ser feito usando o JSON gerado pelo método relatorioTemporario caso o usuário deseje salvar o relatório no banco de dados
     @PostMapping
-    public ResponseEntity<?> cadastrarRelatorio(@PathVariable Long idMeta, @RequestBody RelatorioDTO relatorioDTO) {
-        relatorioService.cadastrarRelatorio(idMeta, relatorioDTO);
+    public ResponseEntity<?> cadastrarRelatorio(@RequestBody RelatorioDTO relatorioDTO) {
+        relatorioService.cadastrarRelatorio(relatorioDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -60,20 +61,21 @@ public class RelatorioControllerWeb {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/metaconcluida/{id}")
-    public ResponseEntity<?> metaFoiConcluida(@PathVariable Long id){
-        Optional<MetaDTO> metaDTOOptional =
-                metaService.buscarMetaPorId(id);
+    //Método que gera um relatório temporário para a visualização dos status da meta
+    @GetMapping("/relatoriotemp/{id} ")
+    public ResponseEntity<RelatorioDTO> relatorioTemporario(@PathVariable Long id) {
+        double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
+        double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);
+        int totalResumos = relatorioService.calcularResumosFeitos(id);
+        String categoriaMaisConsumida = relatorioService.calcularCategoriasMaisConsumidas(id);
+        int diasParaConcluir = relatorioService.calcularDiasParaMeta(id);
+        boolean metaConcluida = relatorioService.metaFoiConcluida(id);
 
-        if (metaDTOOptional.isPresent()) {
+        RelatorioDTO relatorioDTO = new RelatorioDTO(tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
+                diasParaConcluir, metaConcluida);
 
-            MetaDTO metaDTO = metaDTOOptional.orElseThrow(() -> new NoSuchElementException("Optional está vazio"));
-            return ResponseEntity.ok(relatorioService.metaFoiConcluida(metaDTO));
+        return ResponseEntity.ok(relatorioDTO);
 
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Meta não encontrada.");
-        }
     }
 
 }

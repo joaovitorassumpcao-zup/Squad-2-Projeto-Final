@@ -23,4 +23,16 @@ public @Data class RelatorioDTO implements Serializable {
 
     boolean metaConcluida;
 
+    public RelatorioDTO(double tempoTotal, double mediaTempo, int totalResumos, String categoriaMaisConsumida, int diasParaConcluir, boolean metaConcluida) {
+        this.tempoTotal = tempoTotal;
+        this.mediaTempo = mediaTempo;
+        this.totalResumos = totalResumos;
+        this.categoriaMaisConsumida = categoriaMaisConsumida;
+        this.diasParaConcluir = diasParaConcluir;
+        this.metaConcluida = metaConcluida;
+    }
+
+    public RelatorioDTO(){
+
+    }
 }
