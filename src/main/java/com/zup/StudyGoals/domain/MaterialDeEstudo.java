@@ -44,6 +44,9 @@ public class MaterialDeEstudo implements Serializable {
     @JoinColumn(name = "meta_materiais_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Meta metas;
 
+    public boolean materialTemUmaMeta (Meta meta){
+        return this.metas != null && this.metas.equals(meta);
+    }
 
     public Long getId() {
         return id;

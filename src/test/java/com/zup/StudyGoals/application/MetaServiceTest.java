@@ -1,5 +1,6 @@
 package com.zup.StudyGoals.application;
 
+import com.zup.StudyGoals.data.MaterialDeEstudoRepository;
 import com.zup.StudyGoals.data.MetaRepository;
 import com.zup.StudyGoals.domain.Categoria;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -30,9 +32,10 @@ class MetaServiceTest {
 
     @InjectMocks
     private MetaService metaService;
-
     @Mock
     private MetaRepository metaRepository;
+    @Mock
+    private MaterialDeEstudoRepository materialDeEstudoRepository;
 
     private Meta meta;
 
@@ -64,6 +67,7 @@ class MetaServiceTest {
         assertEquals(listaMocks.get(0).getDataFinal(), listaResultado.get(0).getDataFinal());
         assertEquals(listaMocks.get(0).getMetaMinutosDia(), listaResultado.get(0).getMetaMinutosDia());
         assertEquals(listaMocks.get(0).getObjetivo(), listaResultado.get(0).getObjetivo());
+        assertEquals(listaMocks.get(0).getMateriaisDeEstudo(), listaResultado.get(0).getMateriaisDeEstudo());
     }
 
     @Test
@@ -102,9 +106,24 @@ class MetaServiceTest {
         assertFalse(resultado.isPresent());
     }
 
-    @Disabled
     @Test
-    void adicionarNovaMetaComMateriais() throws Exception{
+    void testeAdicionarNovaMetaComMateriais() throws Exception{
+
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
+        listaMaterial.add(materialDeEstudo);
+
+
+        Meta meta =  new Meta(1L, "Inglês", LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00") , 30, "Melhorar gramática", listaMaterial);
+
+        when(metaRepository.save(any(Meta.class))).thenReturn(meta);
+        metaService.adicionarNovaMetaComMateriais(meta,listaMaterial);
+
+        verify(metaRepository, times(1)).save(any(Meta.class));
+        verify(materialDeEstudoRepository, times(1)).save(any(MaterialDeEstudo.class));
+
+        assertTrue(materialDeEstudo.materialTemUmaMeta(meta));
+
     }
 
     @Disabled
