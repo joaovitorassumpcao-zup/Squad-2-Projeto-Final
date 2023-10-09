@@ -42,9 +42,8 @@ public class RelatorioService {
                 .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO);
     }
 
-    public Relatorio cadastrarRelatorio(Relatorio relatorio) {
-        Relatorio novoRelatorio = relatorioRepository.save(relatorio);
-        return relatorio;
+    public void cadastrarRelatorio(Relatorio relatorio) {
+        relatorioRepository.save(relatorio);
     }
 
     public Optional<RelatorioDTO> alterarRelatorio(Long id, RelatorioDTO relatorioDTO) {

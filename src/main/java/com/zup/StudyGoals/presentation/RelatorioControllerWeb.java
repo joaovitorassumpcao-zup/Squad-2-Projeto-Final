@@ -73,7 +73,7 @@ public class RelatorioControllerWeb {
     }
 
     //Método que gera um relatório temporário para a visualização dos status da meta
-    @GetMapping("/relatoriotemp/{id} ")
+    @GetMapping("/relatoriotemp/{id}")
     public ResponseEntity<RelatorioDTO> relatorioTemporario(@PathVariable Long id) {
         double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
         double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);
