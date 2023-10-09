@@ -2,6 +2,7 @@ package com.zup.StudyGoals.presentation;
 
 import com.zup.StudyGoals.application.MetaService;
 import com.zup.StudyGoals.application.RelatorioService;
+import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.MetaDTO;
 import com.zup.StudyGoals.dto.RelatorioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class RelatorioControllerWeb {
     MetaService metaService;
 
     @GetMapping
-    public ResponseEntity<List<RelatorioDTO>> listarRelatorios() {
-        return ResponseEntity.ok(relatorioService.listarRelatorios());
+    public List<RelatorioDTO> listarRelatorios() {
+        return relatorioService.listarRelatorios();
     }
 
     @GetMapping("/{id}")
@@ -43,8 +44,18 @@ public class RelatorioControllerWeb {
     //O post deve ser feito usando o JSON gerado pelo método relatorioTemporario caso o usuário deseje salvar o relatório no banco de dados
     @PostMapping
     public ResponseEntity<?> cadastrarRelatorio(@RequestBody RelatorioDTO relatorioDTO) {
-        relatorioService.cadastrarRelatorio(relatorioDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        Relatorio novoRelatorio = new Relatorio();
+        novoRelatorio.setTempoTotal(relatorioDTO.getTempoTotal());
+        novoRelatorio.setMediaTempo(relatorioDTO.getMediaTempo());
+        novoRelatorio.setTotalResumos(relatorioDTO.getTotalResumos());
+        novoRelatorio.setCategoriaMaisConsumida(relatorioDTO.getCategoriaMaisConsumida());
+        novoRelatorio.setDiasParaConcluir(relatorioDTO.getDiasParaConcluir());
+        novoRelatorio.setMetaConcluida(relatorioDTO.isMetaConcluida());
+
+        relatorioService.cadastrarRelatorio(novoRelatorio);
+
+        return ResponseEntity.ok("Relatório salvo com sucesso! " + novoRelatorio);
     }
 
     @PutMapping("/{id}")

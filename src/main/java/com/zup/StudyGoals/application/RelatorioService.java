@@ -26,11 +26,15 @@ public class RelatorioService {
     MetaRepository metaRepository;
 
     public List<RelatorioDTO> listarRelatorios() {
-        return relatorioRepository
-                .findAll()
-                .stream()
-                .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO)
-                .collect(Collectors.toList());
+
+        List<Relatorio> relatorios = relatorioRepository.findAll();
+        List<RelatorioDTO> relatorioDTOS = new ArrayList<>();
+
+        for (Relatorio relatorio : relatorios) {
+            relatorioDTOS.add(new RelatorioDTO(relatorio));
+        }
+
+        return relatorioDTOS;
     }
 
     public Optional<RelatorioDTO> buscarRelatorioPorId(Long id) {
@@ -38,11 +42,9 @@ public class RelatorioService {
                 .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO);
     }
 
-    public RelatorioDTO cadastrarRelatorio(RelatorioDTO relatorioDTO) {
-        Relatorio relatorio = new Relatorio();
-        BeanUtils.copyProperties(relatorioDTO, relatorio);
-        relatorioRepository.save(relatorio);
-         return relatorioDTO;
+    public Relatorio cadastrarRelatorio(Relatorio relatorio) {
+        Relatorio novoRelatorio = relatorioRepository.save(relatorio);
+        return relatorio;
     }
 
     public Optional<RelatorioDTO> alterarRelatorio(Long id, RelatorioDTO relatorioDTO) {
