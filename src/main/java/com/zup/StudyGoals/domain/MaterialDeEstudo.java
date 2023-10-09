@@ -3,6 +3,7 @@ package com.zup.StudyGoals.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_MATERIAISDEESTUDO")
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class MaterialDeEstudo implements Serializable {
 
     @Id

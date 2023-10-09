@@ -1,6 +1,8 @@
 package com.zup.StudyGoals.application;
 
 import com.zup.StudyGoals.data.MetaRepository;
+import com.zup.StudyGoals.domain.Categoria;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.dto.MetaDTO;
 import org.junit.jupiter.api.Test;
@@ -31,8 +33,13 @@ class MetaServiceTest {
 
     @Test
     void TesteListarMetas() throws Exception{
+
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"), null);
+        List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
+        listaMaterial.add(materialDeEstudo);
+
         List<Meta> listaMocks = new ArrayList<>();
-        listaMocks.add(new Meta(1L, "Inglês", LocalDateTime.parse("2023-10-20 08:00:00"), LocalDateTime.parse("2023-10-20 08:00:00") , 30, "Melhorar gramática", null));
+        listaMocks.add(new Meta(1L, "Inglês", LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00") , 30, "Melhorar gramática", listaMaterial));
 
         when(metaRepository.findAll()).thenReturn(listaMocks);
 
@@ -46,8 +53,6 @@ class MetaServiceTest {
         assertEquals(listaMocks.get(0).getDataFinal(), listaResultado.get(0).getDataFinal());
         assertEquals(listaMocks.get(0).getMetaMinutosDia(), listaResultado.get(0).getMetaMinutosDia());
         assertEquals(listaMocks.get(0).getObjetivo(), listaResultado.get(0).getObjetivo());
-
-
     }
 
     @Test
