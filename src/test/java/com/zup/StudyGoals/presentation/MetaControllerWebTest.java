@@ -26,6 +26,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -87,8 +88,10 @@ class MetaControllerWebTest {
     void testeAlterarMeta() throws Exception{
     }
 
-    @Disabled
     @Test
     void testeDeletarMeta() throws Exception{
+        Long id = 1L;
+        mockMvc.perform(delete("/api/metas/{id}",id))
+                .andExpect(status().isOk());
     }
 }
