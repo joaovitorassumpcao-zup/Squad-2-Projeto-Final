@@ -50,7 +50,7 @@ public class MetaControllerWeb {
         List<MaterialDeEstudo> materiaisDeEstudo = metaDTO.getMateriaisDeEstudo();
         metaService.adicionarNovaMetaComMateriais(novaMeta, materiaisDeEstudo);
 
-        return ResponseEntity.ok("Nova meta adicionada com sucesso! ");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Nova meta criada com sucesso! ");
 
     }
 

@@ -42,7 +42,7 @@ public class MaterialDeEstudoControllerWeb {
         MaterialDeEstudo novoMaterial = MaterialDeEstudoDTOMapper.INSTANCE.DTOParaMaterialDeEstudo(materialDeEstudoDTO);
         MaterialDeEstudoDTO novoMaterialDTO = materialDeEstudoService.cadastrarMaterial(new MaterialDeEstudoDTO(novoMaterial));
 
-        return ResponseEntity.ok().body("Novo material de estudo cadastrado com sucesso! ");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Novo material de estudo cadastrado com sucesso! ");
 
     }
 
