@@ -33,12 +33,12 @@ public class RelatorioDTO implements Serializable {
     }
 
     public RelatorioDTO (Relatorio relatorio) {
-        this.tempoTotal = tempoTotal;
-        this.mediaTempo = mediaTempo;
-        this.totalResumos = totalResumos;
-        this.categoriaMaisConsumida = categoriaMaisConsumida;
-        this.diasParaConcluir = diasParaConcluir;
-        this.metaConcluida = metaConcluida;
+        this.tempoTotal = relatorio.getTempoTotal();
+        this.mediaTempo = relatorio.getMediaTempo();
+        this.totalResumos = relatorio.getTotalResumos();
+        this.categoriaMaisConsumida = relatorio.getCategoriaMaisConsumida();
+        this.diasParaConcluir = relatorio.getDiasParaConcluir();
+        this.metaConcluida = relatorio.isMetaConcluida();
     }
 
     public RelatorioDTO(){

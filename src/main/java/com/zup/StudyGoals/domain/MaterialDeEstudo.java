@@ -108,17 +108,17 @@ public class MaterialDeEstudo implements Serializable {
         this.metas = metas;
     }
 
-    @Override
-    public String toString() {
-        return "MaterialDeEstudo{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", categoria=" + categoria +
-                ", url='" + url + '\'' +
-                ", resumo='" + resumo + '\'' +
-                ", dataInicio=" + dataInicio +
-                ", dataConclusao=" + dataConclusao +
-                ", metas=" + metas +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "MaterialDeEstudo{" +
+//                "id=" + id +
+//                ", titulo='" + titulo + '\'' +
+//                ", categoria=" + categoria +
+//                ", url='" + url + '\'' +
+//                ", resumo='" + resumo + '\'' +
+//                ", dataInicio=" + dataInicio +
+//                ", dataConclusao=" + dataConclusao +
+//                ", metas=" + metas +
+//                '}';
+//    }
 }

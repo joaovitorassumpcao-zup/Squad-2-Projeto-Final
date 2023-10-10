@@ -43,19 +43,31 @@ public class RelatorioControllerWeb {
 
     //O post deve ser feito usando o JSON gerado pelo método relatorioTemporario caso o usuário deseje salvar o relatório no banco de dados
     @PostMapping
-    public ResponseEntity<?> cadastrarRelatorio(@RequestBody RelatorioDTO relatorioDTO) {
+    public ResponseEntity<?> cadastrarRelatorio(@RequestParam Long id) {
+
+        double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
+        double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);
+        int totalResumos = relatorioService.calcularResumosFeitos(id);
+        String categoriaMaisConsumida = relatorioService.calcularCategoriasMaisConsumidas(id);
+        int diasParaConcluir = relatorioService.calcularDiasParaMeta(id);
+        boolean metaConcluida = relatorioService.metaFoiConcluida(id);
 
         Relatorio novoRelatorio = new Relatorio();
-        novoRelatorio.setTempoTotal(relatorioDTO.getTempoTotal());
-        novoRelatorio.setMediaTempo(relatorioDTO.getMediaTempo());
-        novoRelatorio.setTotalResumos(relatorioDTO.getTotalResumos());
-        novoRelatorio.setCategoriaMaisConsumida(relatorioDTO.getCategoriaMaisConsumida());
-        novoRelatorio.setDiasParaConcluir(relatorioDTO.getDiasParaConcluir());
-        novoRelatorio.setMetaConcluida(relatorioDTO.isMetaConcluida());
+
+        novoRelatorio.setTempoTotal(tempoTotal);
+        novoRelatorio.setMediaTempo(mediaTempo);
+        novoRelatorio.setTotalResumos(totalResumos);
+        novoRelatorio.setCategoriaMaisConsumida(categoriaMaisConsumida);
+        novoRelatorio.setDiasParaConcluir(diasParaConcluir);
+        novoRelatorio.setMetaConcluida(metaConcluida);
+
 
         relatorioService.cadastrarRelatorio(novoRelatorio);
 
-        return ResponseEntity.ok("Relatório salvo com sucesso! " + novoRelatorio);
+        RelatorioDTO relatorioDTO = new RelatorioDTO(tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
+                diasParaConcluir, metaConcluida);
+
+        return ResponseEntity.ok(relatorioDTO);
     }
 
     @PutMapping("/{id}")

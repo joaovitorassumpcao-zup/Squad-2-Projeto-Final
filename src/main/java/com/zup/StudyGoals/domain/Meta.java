@@ -102,16 +102,16 @@ public class Meta implements Serializable {
         this.materiaisDeEstudo = materiaisDeEstudo;
     }
 
-    @Override
-    public String toString() {
-        return "Meta{" +
-                "id=" + id +
-                ", assunto='" + assunto + '\'' +
-                ", dataDeInicio=" + dataDeInicio +
-                ", dataFinal=" + dataFinal +
-                ", metaMinutosDia=" + metaMinutosDia +
-                ", objetivo='" + objetivo + '\'' +
-                ", materiaisDeEstudo=" + materiaisDeEstudo +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Meta{" +
+//                "id=" + id +
+//                ", assunto='" + assunto + '\'' +
+//                ", dataDeInicio=" + dataDeInicio +
+//                ", dataFinal=" + dataFinal +
+//                ", metaMinutosDia=" + metaMinutosDia +
+//                ", objetivo='" + objetivo + '\'' +
+//                ", materiaisDeEstudo=" + materiaisDeEstudo +
+//                '}';
+//    }
 }
