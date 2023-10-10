@@ -7,14 +7,12 @@ import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.dto.MetaDTO;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -126,9 +124,30 @@ class MetaServiceTest {
 
     }
 
-    @Disabled
     @Test
-    void editarMeta() throws Exception{
+    void testeEditarMeta() throws Exception{
+        List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
+        MaterialDeEstudo materialDeEstudo1 = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+
+        listaMaterial.add(materialDeEstudo1);
+
+        Meta metaOriginal =  new Meta( 1L, "Inglês", LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-31T08:00:00") , 30, "Melhorar gramática", listaMaterial);
+
+        MaterialDeEstudo materialDeEstudo2 = new MaterialDeEstudo(2L, "Pronúncia dias da semana", Categoria.AUDIO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        listaMaterial.add(materialDeEstudo2);
+
+        Meta metaAlterada =  new Meta( 1L, "Inglês", LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-31T08:00:00") , 30, "Melhorar gramática", listaMaterial);
+
+        when(metaRepository.findById(1L)).thenReturn(Optional.of(metaOriginal));
+        when(metaRepository.save(any(Meta.class))).thenReturn(metaAlterada);
+
+        Meta resultado = metaService.editarMeta(1L,metaAlterada);
+
+        verify(metaRepository, times(1)).findById(1L);
+        verify(metaRepository, times(1)).save(any(Meta.class));
+
+        assertEquals(metaAlterada.getMateriaisDeEstudo(),resultado.getMateriaisDeEstudo());
+
     }
 
     @Test
