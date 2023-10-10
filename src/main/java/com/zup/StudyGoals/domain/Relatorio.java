@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TB_RELATORIOS")
@@ -38,7 +39,6 @@ public class Relatorio implements Serializable {
     @Column(nullable = false)
     private boolean metaConcluida;
 
-    @ManyToOne
-    @JoinColumn(name = "meta_id")
-    private Meta metas;
+    @Column(nullable = false)
+    private Long metaId;
 }

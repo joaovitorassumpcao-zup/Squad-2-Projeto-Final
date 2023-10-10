@@ -34,14 +34,16 @@ public class RelatorioControllerWeb {
         Optional<RelatorioDTO> relatorioDTOOptional =
                 relatorioService.buscarRelatorioPorId(id);
 
-        if (relatorioDTOOptional.isPresent()) return
-                ResponseEntity.ok(relatorioDTOOptional.get());
-
-        else return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Relatorio não encontrado.");
+        if (relatorioDTOOptional.isPresent()) {
+            return
+                    ResponseEntity.ok(relatorioDTOOptional.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Relatório não encontrado.");
+        }
     }
 
-    //O post deve ser feito usando o JSON gerado pelo método relatorioTemporario caso o usuário deseje salvar o relatório no banco de dados
+    //Gera o relatório atual da meta selecionada ( /api/relatorios?id=1 ) e salva no banco de dados
     @PostMapping
     public ResponseEntity<?> cadastrarRelatorio(@RequestParam Long id) {
 
@@ -82,23 +84,6 @@ public class RelatorioControllerWeb {
     public ResponseEntity<?> deletarRelatorio(@PathVariable Long id) {
         relatorioService.deletarRelatorio(id);
         return ResponseEntity.noContent().build();
-    }
-
-    //Método que gera um relatório temporário para a visualização dos status da meta
-    @GetMapping("/relatoriotemp/{id}")
-    public ResponseEntity<RelatorioDTO> relatorioTemporario(@PathVariable Long id) {
-        double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
-        double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);
-        int totalResumos = relatorioService.calcularResumosFeitos(id);
-        String categoriaMaisConsumida = relatorioService.calcularCategoriasMaisConsumidas(id);
-        int diasParaConcluir = relatorioService.calcularDiasParaMeta(id);
-        boolean metaConcluida = relatorioService.metaFoiConcluida(id);
-
-        RelatorioDTO relatorioDTO = new RelatorioDTO(tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
-                diasParaConcluir, metaConcluida);
-
-        return ResponseEntity.ok(relatorioDTO);
-
     }
 
 }
