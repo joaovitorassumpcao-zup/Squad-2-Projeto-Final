@@ -42,7 +42,7 @@ public class MaterialDeEstudoControllerWeb {
         MaterialDeEstudo novoMaterial = MaterialDeEstudoDTOMapper.INSTANCE.DTOParaMaterialDeEstudo(materialDeEstudoDTO);
         MaterialDeEstudoDTO novoMaterialDTO = materialDeEstudoService.cadastrarMaterial(new MaterialDeEstudoDTO(novoMaterial));
 
-        return ResponseEntity.ok().body("Novo material de estudo cadastrado com sucesso! " + novoMaterialDTO);
+        return ResponseEntity.ok().body("Novo material de estudo cadastrado com sucesso! ");
 
     }
 
@@ -52,7 +52,7 @@ public class MaterialDeEstudoControllerWeb {
 
         MaterialDeEstudo materialAlterado = materialDeEstudoService.alterarMaterial(id,materialDeEstudo);
 
-        if(materialDeEstudo != null) return ResponseEntity.ok().body("Material de estudo editado com sucesso! " + materialAlterado);
+        if(materialDeEstudo != null) return ResponseEntity.ok().body("Material de estudo editado com sucesso! ");
 
         return ResponseEntity.notFound().build();
     }
