@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -73,9 +74,23 @@ class MetaControllerWebTest {
                 .andExpect(status().isOk());
     }
 
-    @Disabled
     @Test
     void testeBuscarMetaPorId() throws Exception{
+
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
+        listaMaterial.add(materialDeEstudo);
+
+        Meta meta = new Meta(1L, "Inglês", LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-30T08:00:00") , 30, "Melhorar gramática", listaMaterial);
+
+        String jsonResultado= "{\"assunto\":\"Inglês\",\"dataDeInicio\":\"2023-10-20 08:00:00\",\"dataFinal\":\"2023-10-30 08:00:00\",\"metaMinutosDia\":30,\"objetivo\":\"Melhorar gramática\",\"materiaisDeEstudo\":[{\"id\":1,\"titulo\":\"Verbo to be\",\"categoria\":\"VIDEO\",\"url\":\"https://www.youtube.com\",\"resumo\":\"Lorem ipsum\",\"dataInicio\":\"2023-10-20 08:00:00\",\"dataConclusao\":\"2023-10-20 08:00:00\",\"metas\":null}]}";
+
+        when(metaService.buscarMetaPorId(meta.getId())).thenReturn(Optional.of(new MetaDTO(meta)));
+
+        mockMvc.perform(get("/api/metas/{id}",1)
+                        .content(String.valueOf(MediaType.APPLICATION_JSON))
+                        .content(jsonResultado))
+                .andExpect(status().isOk());
     }
 
     @Disabled
