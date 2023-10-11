@@ -26,11 +26,15 @@ public class RelatorioService {
     MetaRepository metaRepository;
 
     public List<RelatorioDTO> listarRelatorios() {
-        return relatorioRepository
-                .findAll()
-                .stream()
-                .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO)
-                .collect(Collectors.toList());
+
+        List<Relatorio> relatorios = relatorioRepository.findAll();
+        List<RelatorioDTO> relatorioDTOS = new ArrayList<>();
+
+        for (Relatorio relatorio : relatorios) {
+            relatorioDTOS.add(new RelatorioDTO(relatorio));
+        }
+
+        return relatorioDTOS;
     }
 
     public Optional<RelatorioDTO> buscarRelatorioPorId(Long id) {
@@ -38,11 +42,8 @@ public class RelatorioService {
                 .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO);
     }
 
-    public RelatorioDTO cadastrarRelatorio(RelatorioDTO relatorioDTO) {
-        Relatorio relatorio = new Relatorio();
-        BeanUtils.copyProperties(relatorioDTO, relatorio);
+    public void cadastrarRelatorio(Relatorio relatorio) {
         relatorioRepository.save(relatorio);
-         return relatorioDTO;
     }
 
     public Optional<RelatorioDTO> alterarRelatorio(Long id, RelatorioDTO relatorioDTO) {
@@ -63,18 +64,18 @@ public class RelatorioService {
         relatorioRepository.deleteById(id);
     }
 
-    public Boolean metaFoiConcluida(Long id) {
+    public Boolean metaFoiConcluida(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         if (meta.getDataFinal().isBefore(LocalDateTime.now())) return Boolean.TRUE;
         else return Boolean.FALSE;
     }
 
-    public int calcularDiasParaMeta(Long id) {
+    public int calcularDiasParaMeta(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         Duration duracao = Duration
@@ -85,9 +86,9 @@ public class RelatorioService {
         return dias;
     }
 
-    public String calcularCategoriasMaisConsumidas(Long id) {
+    public String calcularCategoriasMaisConsumidas(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         int artigos = 0;
@@ -132,9 +133,9 @@ public class RelatorioService {
         return maisConsumida;
     }
 
-    public double calcularTempoTotalDedicado(Long id) {
+    public double calcularTempoTotalDedicado(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         MaterialDeEstudoDTO materialDeEstudoDTO = new MaterialDeEstudoDTO();
@@ -149,8 +150,8 @@ public class RelatorioService {
         return duracaoMinutos;
     }
 
-    public double calcularMediaTempoDiaria(Long id) {
-        double tempoTotal = calcularTempoTotalDedicado(id);
+    public double calcularMediaTempoDiaria(Long idMeta) {
+        double tempoTotal = calcularTempoTotalDedicado(idMeta);
         if (tempoTotal <= 1440) {
             return tempoTotal;
         }
@@ -166,9 +167,9 @@ public class RelatorioService {
 
     }
 
-    public int calcularResumosFeitos(Long id) {
+    public int calcularResumosFeitos(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         int resumosFeitos = 0;
