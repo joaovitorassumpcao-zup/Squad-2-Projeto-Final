@@ -89,5 +89,4 @@ public class RelatorioControllerWeb {
         relatorioService.deletarRelatorio(id);
         return ResponseEntity.noContent().build();
     }
-
 }
