@@ -47,8 +47,9 @@ public class MetaService {
     @Transactional
     public void adicionarNovaMetaComMateriais(Meta meta, List<MaterialDeEstudo> materiaisDeEstudo) {
         Meta novaMeta = metaRepository.save(meta);
+        List<MaterialDeEstudo> listaMateriais = new ArrayList<>(materiaisDeEstudo);
 
-        for (MaterialDeEstudo material : materiaisDeEstudo) {
+        for (MaterialDeEstudo material : listaMateriais) {
             novaMeta.adiciona(material);
             materialDeEstudoRepository.save(material);
         }

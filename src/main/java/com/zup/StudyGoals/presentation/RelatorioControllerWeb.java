@@ -62,6 +62,7 @@ public class RelatorioControllerWeb {
         novoRelatorio.setCategoriaMaisConsumida(categoriaMaisConsumida);
         novoRelatorio.setDiasParaConcluir(diasParaConcluir);
         novoRelatorio.setMetaConcluida(metaConcluida);
+        novoRelatorio.setMetaId(id);
 
 
         relatorioService.cadastrarRelatorio(novoRelatorio);
