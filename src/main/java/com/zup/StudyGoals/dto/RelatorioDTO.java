@@ -6,10 +6,13 @@ import lombok.Data;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class RelatorioDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    private LocalDateTime horaRegistro;
 
     double tempoTotal;
 
@@ -23,22 +26,29 @@ public class RelatorioDTO implements Serializable {
 
     boolean metaConcluida;
 
-    public RelatorioDTO(double tempoTotal, double mediaTempo, int totalResumos, String categoriaMaisConsumida, int diasParaConcluir, boolean metaConcluida) {
+    private Long metaId;
+
+    public RelatorioDTO(LocalDateTime horaRegistro, double tempoTotal, double mediaTempo,
+                        int totalResumos, String categoriaMaisConsumida, int diasParaConcluir,
+                        boolean metaConcluida, Long metaId) {
         this.tempoTotal = tempoTotal;
         this.mediaTempo = mediaTempo;
         this.totalResumos = totalResumos;
         this.categoriaMaisConsumida = categoriaMaisConsumida;
         this.diasParaConcluir = diasParaConcluir;
         this.metaConcluida = metaConcluida;
+        this.metaId = metaId;
     }
 
     public RelatorioDTO (Relatorio relatorio) {
+        this.horaRegistro = relatorio.getHoraRegistro();
         this.tempoTotal = relatorio.getTempoTotal();
         this.mediaTempo = relatorio.getMediaTempo();
         this.totalResumos = relatorio.getTotalResumos();
         this.categoriaMaisConsumida = relatorio.getCategoriaMaisConsumida();
         this.diasParaConcluir = relatorio.getDiasParaConcluir();
         this.metaConcluida = relatorio.isMetaConcluida();
+        this.metaId = relatorio.getMetaId();
     }
 
     public RelatorioDTO(){
@@ -46,6 +56,14 @@ public class RelatorioDTO implements Serializable {
     }
 
     //Getters
+
+    public LocalDateTime getHoraRegistro() {
+        return horaRegistro;
+    }
+
+    public Long getMetaId() {
+        return metaId;
+    }
 
     public double getTempoTotal() {
         return tempoTotal;
@@ -72,6 +90,14 @@ public class RelatorioDTO implements Serializable {
     }
 
     //Setters
+
+    public void setHoraRegistro(LocalDateTime horaRegistro) {
+        this.horaRegistro = horaRegistro;
+    }
+
+    public void setMetaId(Long metaId) {
+        this.metaId = metaId;
+    }
 
     public void setTempoTotal(double tempoTotal) {
         this.tempoTotal = tempoTotal;

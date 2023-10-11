@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,6 +48,7 @@ public class RelatorioControllerWeb {
     @PostMapping
     public ResponseEntity<?> cadastrarRelatorio(@RequestParam Long id) {
 
+        LocalDateTime horaRegistro = LocalDateTime.now();
         double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
         double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);
         int totalResumos = relatorioService.calcularResumosFeitos(id);
@@ -63,12 +65,13 @@ public class RelatorioControllerWeb {
         novoRelatorio.setDiasParaConcluir(diasParaConcluir);
         novoRelatorio.setMetaConcluida(metaConcluida);
         novoRelatorio.setMetaId(id);
+        novoRelatorio.setHoraRegistro(horaRegistro);
 
 
         relatorioService.cadastrarRelatorio(novoRelatorio);
 
-        RelatorioDTO relatorioDTO = new RelatorioDTO(tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
-                diasParaConcluir, metaConcluida);
+        RelatorioDTO relatorioDTO = new RelatorioDTO(horaRegistro, tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
+                diasParaConcluir, metaConcluida, id);
 
         return ResponseEntity.ok(relatorioDTO);
     }
