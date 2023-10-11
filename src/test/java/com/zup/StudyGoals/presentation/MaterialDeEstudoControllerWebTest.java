@@ -26,5 +26,74 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(MaterialDeEstudoControllerWeb.class)
 public class MaterialDeEstudoControllerWebTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private MaterialDeEstudoService materialDeEstudoService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Before
+    public void setUp() {
+        materialDeEstudoService = new MaterialDeEstudoService();
+    }
+
+    @Test
+    void listarTodosOsMateriaisTest() throws Exception {
+        mockMvc.perform(get("/api/materiais"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void buscarMaterialPorIdTest() throws Exception {
+        MaterialDeEstudoDTO dto = new MaterialDeEstudoDTO();
+        when(materialDeEstudoService.buscarMaterialPorId(1L)).thenReturn(Optional.of(dto));
+
+        mockMvc.perform(get("/api/materiais/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(dto)));
+    }
+
+    @Test
+    void buscarMaterialPorIdNotFoundTest() throws Exception {
+        when(materialDeEstudoService.buscarMaterialPorId(1L)).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/api/materiais/1"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void criarMaterialTest() throws Exception {
+        MaterialDeEstudoDTO dto = new MaterialDeEstudoDTO();
+        String json = objectMapper.writeValueAsString(dto);
+
+        // TODO erro getMetas() retorna nulo
+        mockMvc.perform(post("/api/materiais")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void alterarMaterialTest() throws Exception {
+        MaterialDeEstudo material = new MaterialDeEstudo();
+        when(materialDeEstudoService.alterarMaterial(anyLong(), any())).thenReturn(material);
+
+        String json = objectMapper.writeValueAsString(material);
+
+        mockMvc.perform(put("/api/materiais/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deletarMaterialTest() throws Exception {
+        mockMvc.perform(delete("/api/materiais/1"))
+                .andExpect(status().isOk());
+    }
 }
 
