@@ -1,5 +1,6 @@
 package com.zup.StudyGoals.application;
 
+import com.zup.StudyGoals.application.mapper.MaterialDeEstudoDTOMapper;
 import com.zup.StudyGoals.data.MaterialDeEstudoRepository;
 import com.zup.StudyGoals.data.MetaRepository;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
@@ -55,13 +56,10 @@ public class MaterialDeEstudoService {
     }
 
     //Cadastrar Material
-    @Transactional
-    public void cadastrarMaterial(MaterialDeEstudo materialDeEstudo, Long idMeta) {
-
-        Meta meta = adiconarMetaParaMaterial(idMeta);
-        materialDeEstudo.setMetas(meta);
-
-        materialDeEstudoRepository.save(materialDeEstudo);
+    public MaterialDeEstudoDTO cadastrarMaterial(MaterialDeEstudoDTO materialDeEstudoDTO) {
+        MaterialDeEstudo novoMaterial = MaterialDeEstudoDTOMapper.INSTANCE.DTOParaMaterialDeEstudo(materialDeEstudoDTO);
+        materialDeEstudoRepository.save(novoMaterial);
+        return new MaterialDeEstudoDTO(novoMaterial);
     }
 
     //Alterar Material

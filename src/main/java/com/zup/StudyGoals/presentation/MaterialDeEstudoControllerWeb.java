@@ -1,6 +1,7 @@
 package com.zup.StudyGoals.presentation;
 
 import com.zup.StudyGoals.application.MaterialDeEstudoService;
+import com.zup.StudyGoals.application.mapper.MaterialDeEstudoDTOMapper;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,24 +35,15 @@ public class MaterialDeEstudoControllerWeb {
 
         return ResponseEntity.ok().body(material);
     }
-    //ENDPOINT POST
+
     //ENDPOINT POST
     @PostMapping
     public ResponseEntity<?> criarMaterial (@RequestBody MaterialDeEstudoDTO materialDeEstudoDTO){
 
-        MaterialDeEstudo novoMaterial = new MaterialDeEstudo();
-        novoMaterial.setTitulo(materialDeEstudoDTO.getTitulo());
-        novoMaterial.setCategoria(materialDeEstudoDTO.getCategoria());
-        novoMaterial.setUrl(materialDeEstudoDTO.getUrl());
-        novoMaterial.setResumo(materialDeEstudoDTO.getResumo());
-        novoMaterial.setDataInicio(materialDeEstudoDTO.getDataInicio());
-        novoMaterial.setDataConclusao(materialDeEstudoDTO.getDataConclusao());
+        MaterialDeEstudo novoMaterial = MaterialDeEstudoDTOMapper.INSTANCE.DTOParaMaterialDeEstudo(materialDeEstudoDTO);
+        MaterialDeEstudoDTO novoMaterialDTO = materialDeEstudoService.cadastrarMaterial(new MaterialDeEstudoDTO(novoMaterial));
 
-        Long metaId = materialDeEstudoDTO.getMetas().getId();
-
-        materialDeEstudoService.cadastrarMaterial(novoMaterial, metaId);
-
-        return ResponseEntity.ok().body("Novo material de estudo cadastrado com sucesso! ");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Novo material de estudo cadastrado com sucesso! ");
 
     }
 
@@ -61,7 +53,7 @@ public class MaterialDeEstudoControllerWeb {
 
         MaterialDeEstudo materialAlterado = materialDeEstudoService.alterarMaterial(id,materialDeEstudo);
 
-        if(materialDeEstudo != null) return ResponseEntity.ok().body("Material de estudo editado com sucesso! " + materialAlterado);
+        if(materialDeEstudo != null) return ResponseEntity.ok().body("Material de estudo editado com sucesso! ");
 
         return ResponseEntity.notFound().build();
     }

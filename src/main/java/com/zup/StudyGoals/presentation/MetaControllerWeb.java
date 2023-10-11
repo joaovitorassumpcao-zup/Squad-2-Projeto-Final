@@ -50,7 +50,7 @@ public class MetaControllerWeb {
         List<MaterialDeEstudo> materiaisDeEstudo = metaDTO.getMateriaisDeEstudo();
         metaService.adicionarNovaMetaComMateriais(novaMeta, materiaisDeEstudo);
 
-        return ResponseEntity.ok("Nova meta adicionada com sucesso! " + novaMeta);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Nova meta criada com sucesso! ");
 
     }
 
@@ -59,7 +59,7 @@ public class MetaControllerWeb {
     public ResponseEntity<?> alterarMeta (@PathVariable Long id, @RequestBody Meta meta){
 
         Meta metaAlterada = metaService.editarMeta(id, meta);
-        if(meta != null) return ResponseEntity.ok().body("Meta alterada com sucesso! " + metaAlterada);
+        if(meta != null) return ResponseEntity.ok().body("Meta alterada com sucesso! ");
 
         return ResponseEntity.notFound().build();
     }
