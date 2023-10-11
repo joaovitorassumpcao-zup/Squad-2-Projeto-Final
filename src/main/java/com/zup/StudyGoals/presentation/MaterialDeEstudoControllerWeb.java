@@ -1,6 +1,7 @@
 package com.zup.StudyGoals.presentation;
 
 import com.zup.StudyGoals.application.MaterialDeEstudoService;
+import com.zup.StudyGoals.application.mapper.MaterialDeEstudoDTOMapper;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class MaterialDeEstudoControllerWeb {
 
         return ResponseEntity.ok().body(material);
     }
+
     //ENDPOINT POST
     @PostMapping
     public ResponseEntity<?> criarMaterial (@RequestBody MaterialDeEstudoDTO materialDeEstudoDTO){
@@ -60,7 +62,7 @@ public class MaterialDeEstudoControllerWeb {
 
         MaterialDeEstudo materialAlterado = materialDeEstudoService.alterarMaterial(id,materialDeEstudo);
 
-        if(materialDeEstudo != null) return ResponseEntity.ok().body("Material de estudo editado com sucesso! " + materialAlterado);
+        if(materialDeEstudo != null) return ResponseEntity.ok().body("Material de estudo editado com sucesso! ");
 
         return ResponseEntity.notFound().build();
     }
