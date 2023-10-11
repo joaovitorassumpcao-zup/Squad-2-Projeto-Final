@@ -11,6 +11,7 @@ import java.util.List;
 
 public class MetaDTO implements Serializable {
     private static final long serialVersionUID = 1L;
+    private Long id;
     private String assunto;
 
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -26,6 +27,7 @@ public class MetaDTO implements Serializable {
     private List<MaterialDeEstudo> MateriaisDeEstudo;
 
     public MetaDTO (Meta meta){
+        this.id = meta.getId();
         this.assunto = meta.getAssunto();
         this.dataDeInicio = meta.getDataDeInicio();
         this.dataFinal = meta.getDataFinal();
@@ -36,6 +38,14 @@ public class MetaDTO implements Serializable {
 
     public MetaDTO() {
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAssunto() {
