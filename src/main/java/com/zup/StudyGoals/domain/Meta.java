@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "TB_METAS")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Meta implements Serializable {
 
     @Id
@@ -100,18 +101,5 @@ public class Meta implements Serializable {
 
     public void setMateriaisDeEstudo(List<MaterialDeEstudo> materiaisDeEstudo) {
         this.materiaisDeEstudo = materiaisDeEstudo;
-    }
-
-    @Override
-    public String toString() {
-        return "Meta{" +
-                "id=" + id +
-                ", assunto='" + assunto + '\'' +
-                ", dataDeInicio=" + dataDeInicio +
-                ", dataFinal=" + dataFinal +
-                ", metaMinutosDia=" + metaMinutosDia +
-                ", objetivo='" + objetivo + '\'' +
-                ", materiaisDeEstudo=" + materiaisDeEstudo +
-                '}';
     }
 }
