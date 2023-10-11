@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 
 public class MaterialDeEstudoDTO implements Serializable {
+    private Long id;
     private static final long serialVersionUID = 1L;
     private String titulo;
     private Categoria categoria;
@@ -22,18 +23,28 @@ public class MaterialDeEstudoDTO implements Serializable {
     private Meta metas;
 
     public MaterialDeEstudoDTO (MaterialDeEstudo materialDeEstudo){
+        this.id = materialDeEstudo.getId();
         this.titulo = materialDeEstudo.getTitulo();
         this.categoria = materialDeEstudo.getCategoria();
         this.url = materialDeEstudo.getUrl();
         this.resumo = materialDeEstudo.getResumo();
         this.dataInicio = materialDeEstudo.getDataInicio();
         this.dataConclusao = materialDeEstudo.getDataConclusao();
-        this.metas = materialDeEstudo.getMetas();
+        //this.metas = materialDeEstudo.getMetas();
     }
 
     public MaterialDeEstudoDTO (){
 
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTitulo() {
         return titulo;
     }

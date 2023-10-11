@@ -61,7 +61,7 @@ public class MaterialDeEstudoService {
     public void cadastrarMaterial(MaterialDeEstudo materialDeEstudo, Long idMeta) {
 
         Meta meta = adiconarMetaParaMaterial(idMeta);
-        materialDeEstudo.setMetas(meta);
+//        materialDeEstudo.setMetas(meta);
 
         materialDeEstudoRepository.save(materialDeEstudo);
     }
