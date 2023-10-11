@@ -46,15 +46,15 @@ public class RelatorioControllerWeb {
 
     //Gera o relatório atual da meta selecionada ( /api/relatorios?id=1 ) e salva no banco de dados
     @PostMapping
-    public ResponseEntity<?> cadastrarRelatorio(@RequestParam Long id) {
+    public ResponseEntity<?> cadastrarRelatorio(@RequestParam Long idMeta) {
 
         LocalDateTime horaRegistro = LocalDateTime.now();
-        double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
-        double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);
-        int totalResumos = relatorioService.calcularResumosFeitos(id);
-        String categoriaMaisConsumida = relatorioService.calcularCategoriasMaisConsumidas(id);
-        int diasParaConcluir = relatorioService.calcularDiasParaMeta(id);
-        boolean metaConcluida = relatorioService.metaFoiConcluida(id);
+        double tempoTotal = relatorioService.calcularTempoTotalDedicado(idMeta);
+        double mediaTempo = relatorioService.calcularMediaTempoDiaria(idMeta);
+        int totalResumos = relatorioService.calcularResumosFeitos(idMeta);
+        String categoriaMaisConsumida = relatorioService.calcularCategoriasMaisConsumidas(idMeta);
+        int diasParaConcluir = relatorioService.calcularDiasParaMeta(idMeta);
+        boolean metaConcluida = relatorioService.metaFoiConcluida(idMeta);
 
         Relatorio novoRelatorio = new Relatorio();
 
@@ -64,14 +64,14 @@ public class RelatorioControllerWeb {
         novoRelatorio.setCategoriaMaisConsumida(categoriaMaisConsumida);
         novoRelatorio.setDiasParaConcluir(diasParaConcluir);
         novoRelatorio.setMetaConcluida(metaConcluida);
-        novoRelatorio.setMetaId(id);
+        novoRelatorio.setMetaId(idMeta);
         novoRelatorio.setHoraRegistro(horaRegistro);
 
 
         relatorioService.cadastrarRelatorio(novoRelatorio);
 
         RelatorioDTO relatorioDTO = new RelatorioDTO(horaRegistro, tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
-                diasParaConcluir, metaConcluida, id);
+                diasParaConcluir, metaConcluida, idMeta);
 
         return ResponseEntity.ok(relatorioDTO);
     }

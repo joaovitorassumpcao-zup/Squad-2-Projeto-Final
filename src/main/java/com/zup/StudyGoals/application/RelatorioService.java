@@ -64,18 +64,18 @@ public class RelatorioService {
         relatorioRepository.deleteById(id);
     }
 
-    public Boolean metaFoiConcluida(Long id) {
+    public Boolean metaFoiConcluida(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         if (meta.getDataFinal().isBefore(LocalDateTime.now())) return Boolean.TRUE;
         else return Boolean.FALSE;
     }
 
-    public int calcularDiasParaMeta(Long id) {
+    public int calcularDiasParaMeta(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         Duration duracao = Duration
@@ -86,9 +86,9 @@ public class RelatorioService {
         return dias;
     }
 
-    public String calcularCategoriasMaisConsumidas(Long id) {
+    public String calcularCategoriasMaisConsumidas(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         int artigos = 0;
@@ -133,9 +133,9 @@ public class RelatorioService {
         return maisConsumida;
     }
 
-    public double calcularTempoTotalDedicado(Long id) {
+    public double calcularTempoTotalDedicado(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         MaterialDeEstudoDTO materialDeEstudoDTO = new MaterialDeEstudoDTO();
@@ -150,8 +150,8 @@ public class RelatorioService {
         return duracaoMinutos;
     }
 
-    public double calcularMediaTempoDiaria(Long id) {
-        double tempoTotal = calcularTempoTotalDedicado(id);
+    public double calcularMediaTempoDiaria(Long idMeta) {
+        double tempoTotal = calcularTempoTotalDedicado(idMeta);
         if (tempoTotal <= 1440) {
             return tempoTotal;
         }
@@ -167,9 +167,9 @@ public class RelatorioService {
 
     }
 
-    public int calcularResumosFeitos(Long id) {
+    public int calcularResumosFeitos(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         int resumosFeitos = 0;
