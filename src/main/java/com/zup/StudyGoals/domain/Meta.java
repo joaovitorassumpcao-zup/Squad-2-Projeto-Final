@@ -46,9 +46,9 @@ public class Meta implements Serializable {
         this.materiaisDeEstudo.add(materialDeEstudo);
         materialDeEstudo.setMetas(this);
         System.out.println("Adicionando MaterialDeEstudo à Meta: " + materialDeEstudo);
-
-        System.out.println("MateriaisDeEstudo da Meta: " + this.materiaisDeEstudo);
+        System.out.println("MateriaisDeEstudo associados à Meta: " + this.materiaisDeEstudo);
     }
+  
     public List<MaterialDeEstudo> getMateriaisDeEstudo() {
         List<MaterialDeEstudo> listaSegura = Collections.unmodifiableList(this.materiaisDeEstudo);
         return listaSegura;
