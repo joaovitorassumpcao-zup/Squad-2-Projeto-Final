@@ -30,7 +30,7 @@ public class MaterialDeEstudoDTO implements Serializable {
         this.resumo = materialDeEstudo.getResumo();
         this.dataInicio = materialDeEstudo.getDataInicio();
         this.dataConclusao = materialDeEstudo.getDataConclusao();
-        this.metas = materialDeEstudo.getMetas();
+        //this.metas = materialDeEstudo.getMetas();
     }
 
     public MaterialDeEstudoDTO (){

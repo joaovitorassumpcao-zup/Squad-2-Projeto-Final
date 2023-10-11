@@ -3,6 +3,8 @@ package com.zup.StudyGoals.application;
 import com.zup.StudyGoals.application.mapper.RelatorioDTOMapper;
 import com.zup.StudyGoals.data.MetaRepository;
 import com.zup.StudyGoals.data.RelatorioRepository;
+import com.zup.StudyGoals.domain.Categoria;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
@@ -97,20 +99,20 @@ public class RelatorioService {
         int workshops = 0;
         int livros = 0;
 
-        for (int i = 0; !meta.getMateriaisDeEstudo().isEmpty(); i++) {
-            if (meta.getMateriaisDeEstudo().get(i).equals("ARTIGO")){
+        for(MaterialDeEstudo material : meta.getMateriaisDeEstudo()){
+            if (material.getCategoria().equals(Categoria.ARTIGO)){
                 artigos += 1;
             }
-            if (meta.getMateriaisDeEstudo().get(i).equals("VIDEO")){
+            if (material.getCategoria().equals(Categoria.VIDEO)){
                 videos += 1;
             }
-            if (meta.getMateriaisDeEstudo().get(i).equals("AUDIO")){
+            if (material.getCategoria().equals(Categoria.AUDIO)){
                 audios += 1;
             }
-            if (meta.getMateriaisDeEstudo().get(i).equals("WORKSHOP")){
+            if (material.getCategoria().equals(Categoria.WORKSHOP)){
                 workshops += 1;
             }
-            if (meta.getMateriaisDeEstudo().get(i).equals("LIVRO")){
+            if (material.getCategoria().equals(Categoria.LIVRO)){
                 livros += 1;
             }
         }
@@ -138,13 +140,12 @@ public class RelatorioService {
         Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
-        MaterialDeEstudoDTO materialDeEstudoDTO = new MaterialDeEstudoDTO();
 
         double duracaoMinutos = 0.0;
 
-        while (!meta.getMateriaisDeEstudo().isEmpty()) {
-            Duration duration = Duration.between(materialDeEstudoDTO.getDataInicio(), materialDeEstudoDTO.getDataConclusao());
-            duracaoMinutos += (duration.getSeconds() * 60);
+        for(MaterialDeEstudo material : meta.getMateriaisDeEstudo()){
+            Duration duration = Duration.between(material.getDataInicio(), material.getDataConclusao());
+            duracaoMinutos += ((double) duration.getSeconds() / 60);
         }
 
         return duracaoMinutos;
@@ -172,10 +173,6 @@ public class RelatorioService {
         Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
-        int resumosFeitos = 0;
-        while (!meta.getMateriaisDeEstudo().isEmpty()) {
-            resumosFeitos += 1;
-        }
-        return resumosFeitos;
+        return meta.getMateriaisDeEstudo().size();
     }
 }
