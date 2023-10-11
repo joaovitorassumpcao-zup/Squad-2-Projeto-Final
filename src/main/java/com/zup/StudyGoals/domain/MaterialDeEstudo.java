@@ -3,7 +3,6 @@ package com.zup.StudyGoals.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "TB_MATERIAISDEESTUDO")
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class MaterialDeEstudo implements Serializable {
 
     @Id
@@ -44,9 +43,6 @@ public class MaterialDeEstudo implements Serializable {
     @JoinColumn(name = "meta_materiais_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Meta metas;
 
-    public boolean materialTemUmaMeta (Meta meta){
-        return this.metas != null && this.metas.equals(meta);
-    }
 
     public Long getId() {
         return id;
@@ -110,5 +106,6 @@ public class MaterialDeEstudo implements Serializable {
 
     public void setMetas(Meta metas) {
         this.metas = metas;
+        System.out.println("ADICIONANDO META" + metas);
     }
 }
