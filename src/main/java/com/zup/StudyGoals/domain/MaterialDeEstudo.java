@@ -106,19 +106,6 @@ public class MaterialDeEstudo implements Serializable {
 
     public void setMetas(Meta metas) {
         this.metas = metas;
+        System.out.println("ADICIONANDO META " + metas);
     }
-
-//    @Override
-//    public String toString() {
-//        return "MaterialDeEstudo{" +
-//                "id=" + id +
-//                ", titulo='" + titulo + '\'' +
-//                ", categoria=" + categoria +
-//                ", url='" + url + '\'' +
-//                ", resumo='" + resumo + '\'' +
-//                ", dataInicio=" + dataInicio +
-//                ", dataConclusao=" + dataConclusao +
-//                ", metas=" + metas +
-//                '}';
-//    }
 }

@@ -40,10 +40,19 @@ public class MaterialDeEstudoControllerWeb {
     @PostMapping
     public ResponseEntity<?> criarMaterial (@RequestBody MaterialDeEstudoDTO materialDeEstudoDTO){
 
-        MaterialDeEstudo novoMaterial = MaterialDeEstudoDTOMapper.INSTANCE.DTOParaMaterialDeEstudo(materialDeEstudoDTO);
-        MaterialDeEstudoDTO novoMaterialDTO = materialDeEstudoService.cadastrarMaterial(new MaterialDeEstudoDTO(novoMaterial));
+        MaterialDeEstudo novoMaterial = new MaterialDeEstudo();
+        novoMaterial.setTitulo(materialDeEstudoDTO.getTitulo());
+        novoMaterial.setCategoria(materialDeEstudoDTO.getCategoria());
+        novoMaterial.setUrl(materialDeEstudoDTO.getUrl());
+        novoMaterial.setResumo(materialDeEstudoDTO.getResumo());
+        novoMaterial.setDataInicio(materialDeEstudoDTO.getDataInicio());
+        novoMaterial.setDataConclusao(materialDeEstudoDTO.getDataConclusao());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Novo material de estudo cadastrado com sucesso! ");
+        Long metaId = materialDeEstudoDTO.getMetas().getId();
+
+        materialDeEstudoService.cadastrarMaterial(novoMaterial, metaId);
+
+        return ResponseEntity.ok().body("Novo material de estudo cadastrado com sucesso! ");
 
     }
 

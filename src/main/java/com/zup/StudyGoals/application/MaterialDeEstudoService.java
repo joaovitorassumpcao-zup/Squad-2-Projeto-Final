@@ -56,10 +56,14 @@ public class MaterialDeEstudoService {
     }
 
     //Cadastrar Material
-    public MaterialDeEstudoDTO cadastrarMaterial(MaterialDeEstudoDTO materialDeEstudoDTO) {
-        MaterialDeEstudo novoMaterial = MaterialDeEstudoDTOMapper.INSTANCE.DTOParaMaterialDeEstudo(materialDeEstudoDTO);
-        materialDeEstudoRepository.save(novoMaterial);
-        return new MaterialDeEstudoDTO(novoMaterial);
+    //Cadastrar Material
+    @Transactional
+    public void cadastrarMaterial(MaterialDeEstudo materialDeEstudo, Long idMeta) {
+
+        Meta meta = adiconarMetaParaMaterial(idMeta);
+        materialDeEstudo.setMetas(meta);
+
+        materialDeEstudoRepository.save(materialDeEstudo);
     }
 
     //Alterar Material
