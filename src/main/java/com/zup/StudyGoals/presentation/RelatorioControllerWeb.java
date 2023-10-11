@@ -2,6 +2,7 @@ package com.zup.StudyGoals.presentation;
 
 import com.zup.StudyGoals.application.MetaService;
 import com.zup.StudyGoals.application.RelatorioService;
+import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.MetaDTO;
 import com.zup.StudyGoals.dto.RelatorioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,8 +26,8 @@ public class RelatorioControllerWeb {
     MetaService metaService;
 
     @GetMapping
-    public ResponseEntity<List<RelatorioDTO>> listarRelatorios() {
-        return ResponseEntity.ok(relatorioService.listarRelatorios());
+    public List<RelatorioDTO> listarRelatorios() {
+        return relatorioService.listarRelatorios();
     }
 
     @GetMapping("/{id}")
@@ -33,18 +35,45 @@ public class RelatorioControllerWeb {
         Optional<RelatorioDTO> relatorioDTOOptional =
                 relatorioService.buscarRelatorioPorId(id);
 
-        if (relatorioDTOOptional.isPresent()) return
-                ResponseEntity.ok(relatorioDTOOptional.get());
-
-        else return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("Relatorio não encontrado.");
+        if (relatorioDTOOptional.isPresent()) {
+            return
+                    ResponseEntity.ok(relatorioDTOOptional.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Relatório não encontrado.");
+        }
     }
 
-    //O post deve ser feito usando o JSON gerado pelo método relatorioTemporario caso o usuário deseje salvar o relatório no banco de dados
+    //Gera o relatório atual da meta selecionada ( /api/relatorios?id=1 ) e salva no banco de dados
     @PostMapping
-    public ResponseEntity<?> cadastrarRelatorio(@RequestBody RelatorioDTO relatorioDTO) {
-        relatorioService.cadastrarRelatorio(relatorioDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<?> cadastrarRelatorio(@RequestParam Long idMeta) {
+
+        LocalDateTime horaRegistro = LocalDateTime.now();
+        double tempoTotal = relatorioService.calcularTempoTotalDedicado(idMeta);
+        double mediaTempo = relatorioService.calcularMediaTempoDiaria(idMeta);
+        int totalResumos = relatorioService.calcularResumosFeitos(idMeta);
+        String categoriaMaisConsumida = relatorioService.calcularCategoriasMaisConsumidas(idMeta);
+        int diasParaConcluir = relatorioService.calcularDiasParaMeta(idMeta);
+        boolean metaConcluida = relatorioService.metaFoiConcluida(idMeta);
+
+        Relatorio novoRelatorio = new Relatorio();
+
+        novoRelatorio.setTempoTotal(tempoTotal);
+        novoRelatorio.setMediaTempo(mediaTempo);
+        novoRelatorio.setTotalResumos(totalResumos);
+        novoRelatorio.setCategoriaMaisConsumida(categoriaMaisConsumida);
+        novoRelatorio.setDiasParaConcluir(diasParaConcluir);
+        novoRelatorio.setMetaConcluida(metaConcluida);
+        novoRelatorio.setMetaId(idMeta);
+        novoRelatorio.setHoraRegistro(horaRegistro);
+
+
+        relatorioService.cadastrarRelatorio(novoRelatorio);
+
+        RelatorioDTO relatorioDTO = new RelatorioDTO(horaRegistro, tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
+                diasParaConcluir, metaConcluida, idMeta);
+
+        return ResponseEntity.ok(relatorioDTO);
     }
 
     @PutMapping("/{id}")
@@ -60,22 +89,4 @@ public class RelatorioControllerWeb {
         relatorioService.deletarRelatorio(id);
         return ResponseEntity.noContent().build();
     }
-
-    //Método que gera um relatório temporário para a visualização dos status da meta
-    @GetMapping("/relatoriotemp/{id}")
-    public ResponseEntity<RelatorioDTO> relatorioTemporario(@PathVariable Long id) {
-        double tempoTotal = relatorioService.calcularTempoTotalDedicado(id);
-        double mediaTempo = relatorioService.calcularMediaTempoDiaria(id);
-        int totalResumos = relatorioService.calcularResumosFeitos(id);
-        String categoriaMaisConsumida = relatorioService.calcularCategoriasMaisConsumidas(id);
-        int diasParaConcluir = relatorioService.calcularDiasParaMeta(id);
-        boolean metaConcluida = relatorioService.metaFoiConcluida(id);
-
-        RelatorioDTO relatorioDTO = new RelatorioDTO(tempoTotal, mediaTempo, totalResumos, categoriaMaisConsumida,
-                diasParaConcluir, metaConcluida);
-
-        return ResponseEntity.ok(relatorioDTO);
-
-    }
-
 }

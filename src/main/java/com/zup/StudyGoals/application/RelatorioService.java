@@ -3,6 +3,8 @@ package com.zup.StudyGoals.application;
 import com.zup.StudyGoals.application.mapper.RelatorioDTOMapper;
 import com.zup.StudyGoals.data.MetaRepository;
 import com.zup.StudyGoals.data.RelatorioRepository;
+import com.zup.StudyGoals.domain.Categoria;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
@@ -26,11 +28,15 @@ public class RelatorioService {
     MetaRepository metaRepository;
 
     public List<RelatorioDTO> listarRelatorios() {
-        return relatorioRepository
-                .findAll()
-                .stream()
-                .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO)
-                .collect(Collectors.toList());
+
+        List<Relatorio> relatorios = relatorioRepository.findAll();
+        List<RelatorioDTO> relatorioDTOS = new ArrayList<>();
+
+        for (Relatorio relatorio : relatorios) {
+            relatorioDTOS.add(new RelatorioDTO(relatorio));
+        }
+
+        return relatorioDTOS;
     }
 
     public Optional<RelatorioDTO> buscarRelatorioPorId(Long id) {
@@ -38,11 +44,8 @@ public class RelatorioService {
                 .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO);
     }
 
-    public RelatorioDTO cadastrarRelatorio(RelatorioDTO relatorioDTO) {
-        Relatorio relatorio = new Relatorio();
-        BeanUtils.copyProperties(relatorioDTO, relatorio);
+    public void cadastrarRelatorio(Relatorio relatorio) {
         relatorioRepository.save(relatorio);
-         return relatorioDTO;
     }
 
     public Optional<RelatorioDTO> alterarRelatorio(Long id, RelatorioDTO relatorioDTO) {
@@ -63,18 +66,18 @@ public class RelatorioService {
         relatorioRepository.deleteById(id);
     }
 
-    public Boolean metaFoiConcluida(Long id) {
+    public Boolean metaFoiConcluida(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         if (meta.getDataFinal().isBefore(LocalDateTime.now())) return Boolean.TRUE;
         else return Boolean.FALSE;
     }
 
-    public int calcularDiasParaMeta(Long id) {
+    public int calcularDiasParaMeta(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         Duration duracao = Duration
@@ -85,9 +88,9 @@ public class RelatorioService {
         return dias;
     }
 
-    public String calcularCategoriasMaisConsumidas(Long id) {
+    public String calcularCategoriasMaisConsumidas(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
         int artigos = 0;
@@ -96,20 +99,20 @@ public class RelatorioService {
         int workshops = 0;
         int livros = 0;
 
-        for (int i = 0; !meta.getMateriaisDeEstudo().isEmpty(); i++) {
-            if (meta.getMateriaisDeEstudo().get(i).equals("ARTIGO")){
+        for(MaterialDeEstudo material : meta.getMateriaisDeEstudo()){
+            if (material.getCategoria().equals(Categoria.ARTIGO)){
                 artigos += 1;
             }
-            if (meta.getMateriaisDeEstudo().get(i).equals("VIDEO")){
+            if (material.getCategoria().equals(Categoria.VIDEO)){
                 videos += 1;
             }
-            if (meta.getMateriaisDeEstudo().get(i).equals("AUDIO")){
+            if (material.getCategoria().equals(Categoria.AUDIO)){
                 audios += 1;
             }
-            if (meta.getMateriaisDeEstudo().get(i).equals("WORKSHOP")){
+            if (material.getCategoria().equals(Categoria.WORKSHOP)){
                 workshops += 1;
             }
-            if (meta.getMateriaisDeEstudo().get(i).equals("LIVRO")){
+            if (material.getCategoria().equals(Categoria.LIVRO)){
                 livros += 1;
             }
         }
@@ -132,25 +135,24 @@ public class RelatorioService {
         return maisConsumida;
     }
 
-    public double calcularTempoTotalDedicado(Long id) {
+    public double calcularTempoTotalDedicado(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
-        MaterialDeEstudoDTO materialDeEstudoDTO = new MaterialDeEstudoDTO();
 
         double duracaoMinutos = 0.0;
 
-        while (!meta.getMateriaisDeEstudo().isEmpty()) {
-            Duration duration = Duration.between(materialDeEstudoDTO.getDataInicio(), materialDeEstudoDTO.getDataConclusao());
-            duracaoMinutos += (duration.getSeconds() * 60);
+        for(MaterialDeEstudo material : meta.getMateriaisDeEstudo()){
+            Duration duration = Duration.between(material.getDataInicio(), material.getDataConclusao());
+            duracaoMinutos += ((double) duration.getSeconds() / 60);
         }
 
         return duracaoMinutos;
     }
 
-    public double calcularMediaTempoDiaria(Long id) {
-        double tempoTotal = calcularTempoTotalDedicado(id);
+    public double calcularMediaTempoDiaria(Long idMeta) {
+        double tempoTotal = calcularTempoTotalDedicado(idMeta);
         if (tempoTotal <= 1440) {
             return tempoTotal;
         }
@@ -166,15 +168,11 @@ public class RelatorioService {
 
     }
 
-    public int calcularResumosFeitos(Long id) {
+    public int calcularResumosFeitos(Long idMeta) {
 
-        Optional<Meta> optionalMeta = metaRepository.findById(id);
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
         Meta meta = optionalMeta.orElseThrow(() -> new NoSuchElementException("Meta não encontrada"));
 
-        int resumosFeitos = 0;
-        while (!meta.getMateriaisDeEstudo().isEmpty()) {
-            resumosFeitos += 1;
-        }
-        return resumosFeitos;
+        return meta.getMateriaisDeEstudo().size();
     }
 }

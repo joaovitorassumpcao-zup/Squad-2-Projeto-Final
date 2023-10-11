@@ -39,13 +39,16 @@ public class Meta implements Serializable {
     @Column(nullable = false)
     private String objetivo;
 
-    @OneToMany(mappedBy = "metas", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MaterialDeEstudo> materiaisDeEstudo = new ArrayList<>();
 
     public void adiciona(MaterialDeEstudo materialDeEstudo) {
         this.materiaisDeEstudo.add(materialDeEstudo);
-        materialDeEstudo.setMetas(this);
+//        materialDeEstudo.setMetas(this);
+        System.out.println("Adicionando MaterialDeEstudo à Meta: " + materialDeEstudo);
+        System.out.println("MateriaisDeEstudo associados à Meta: " + this.materiaisDeEstudo);
     }
+  
     public List<MaterialDeEstudo> getMateriaisDeEstudo() {
         List<MaterialDeEstudo> listaSegura = Collections.unmodifiableList(this.materiaisDeEstudo);
         return listaSegura;

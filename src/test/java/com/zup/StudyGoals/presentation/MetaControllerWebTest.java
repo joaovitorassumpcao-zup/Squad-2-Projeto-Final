@@ -56,7 +56,7 @@ class MetaControllerWebTest {
     @Test
     void listarTodasAsMetas() throws Exception{
 
-        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"));
         List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
         listaMaterial.add(materialDeEstudo);
 
@@ -78,7 +78,7 @@ class MetaControllerWebTest {
     @Test
     void testeBuscarMetaPorId() throws Exception{
 
-        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"));
         List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
         listaMaterial.add(materialDeEstudo);
 
@@ -96,7 +96,7 @@ class MetaControllerWebTest {
 
     @Test
     void testeAdicionarNovaMeta() throws Exception{
-        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"));
         List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
         listaMaterial.add(materialDeEstudo);
 
@@ -108,7 +108,7 @@ class MetaControllerWebTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("Nova meta adicionada com sucesso! "));
+                .andExpect(content().string("Nova meta criada com sucesso! "));
     }
 
     @Test
