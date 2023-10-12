@@ -8,17 +8,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.client.ExpectedCount.times;
 
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
@@ -30,11 +33,13 @@ class RelatorioTest {
     @Mock
     private RelatorioRepository relatorioRepository;
 
+    private Relatorio relatorio;
+
+    Relatorio relatorio1 = new Relatorio(1L, LocalDateTime.parse("2023-10-20T08:00:00"), 1.0,
+            1.0,1,"WORKSHOP(2)",2,true,1L);
+
     @Test
     void testListarRelatorios() throws Exception {
-
-        Relatorio relatorio1 = new Relatorio(1L, LocalDateTime.parse("2023-10-20T08:00:00"), 1.0,
-                1.0,1,"WORKSHOP(2)",2,true,1L);
 
         List<Relatorio> relatorioList = new ArrayList<>();
         relatorioList.add(relatorio1);
@@ -57,7 +62,48 @@ class RelatorioTest {
 
     }
 
+    @Test
     void testBuscarRelatorioPorId() throws Exception {
+
+        when(relatorioRepository.findById(1L)).thenReturn(Optional.of(relatorio1));
+
+        Optional<RelatorioDTO> resultado = relatorioService.buscarRelatorioPorId(1L);
+        verify(relatorioRepository, Mockito.times(1)).findById(1L);
+
+        assertTrue(resultado.isPresent());
+        assertEquals(relatorio1.getHoraRegistro(), resultado.get().getHoraRegistro());
+        assertEquals(relatorio1.getTempoTotal(), resultado.get().getTempoTotal());
+        assertEquals(relatorio1.getMediaTempo(), resultado.get().getMediaTempo());
+        assertEquals(relatorio1.getTotalResumos(), resultado.get().getTotalResumos());
+        assertEquals(relatorio1.getCategoriaMaisConsumida(), resultado.get().getCategoriaMaisConsumida());
+        assertEquals(relatorio1.getDiasParaConcluir(), resultado.get().getDiasParaConcluir());
+        assertEquals(relatorio1.isMetaConcluida(), resultado.get().isMetaConcluida());
+        assertEquals(relatorio1.getMetaId(), resultado.get().getMetaId());
+
+    }
+
+    @Test
+    void testNaoEncontraRelatorioPorId() throws Exception {
+
+        Long id = 2L;
+
+        when(relatorioRepository.findById(id)).thenReturn(Optional.empty());
+        Optional<RelatorioDTO> resultado = relatorioService.buscarRelatorioPorId(id);
+
+        verify(relatorioRepository, Mockito.times(1)).findById(id);
+        assertFalse(resultado.isPresent());
+
+    }
+
+    @Test
+    void testCadastrarRelatorio() throws Exception {
+        when(relatorioRepository.save(any(Relatorio.class))).thenReturn(relatorio1);
+        relatorioService.cadastrarRelatorio(relatorio1);
+
+        verify(relatorioRepository, Mockito.times(1)).save(any(Relatorio.class));
+    }
+
+    void testAlterarRelatorio() throws Exception {
 
     }
 

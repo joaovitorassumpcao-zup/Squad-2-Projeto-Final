@@ -40,8 +40,13 @@ public class RelatorioService {
     }
 
     public Optional<RelatorioDTO> buscarRelatorioPorId(Long id) {
-        return relatorioRepository.findById(id)
-                .map(RelatorioDTOMapper.INSTANCE::relatorioParaDTO);
+        Optional<Relatorio> relatorio = relatorioRepository.findById(id);
+
+        if(relatorio.isPresent()) {
+            return Optional.of(new RelatorioDTO(relatorio.get()));
+        }
+
+        return Optional.empty();
     }
 
     public void cadastrarRelatorio(Relatorio relatorio) {
