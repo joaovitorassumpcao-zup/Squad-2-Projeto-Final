@@ -40,6 +40,9 @@ public class MaterialDeEstudo implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataConclusao;
 
+    public MaterialDeEstudo(Long id, String titulo, Categoria categoria, String url, String resumo, LocalDateTime dataInicio, LocalDateTime dataConclusao, Meta meta) {
+    }
+
 
 //
 //    public boolean materialTemUmaMeta (Meta meta){
