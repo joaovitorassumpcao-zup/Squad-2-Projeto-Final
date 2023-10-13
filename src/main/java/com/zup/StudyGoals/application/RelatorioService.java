@@ -9,6 +9,8 @@ import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
 import com.zup.StudyGoals.dto.RelatorioDTO;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Service
 public class RelatorioService {
 
