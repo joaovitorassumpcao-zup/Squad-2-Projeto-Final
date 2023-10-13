@@ -7,6 +7,7 @@ import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.RelatorioDTO;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -18,13 +19,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.client.ExpectedCount.times;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -118,7 +119,56 @@ class RelatorioTest {
     }
 
     @Test
-    void testCalcularResumosFeitos(){
+    void testCalcularTempoTotalDedicado() throws Exception{
+        LocalDateTime dataInicio1 = LocalDateTime.now();
+        LocalDateTime dataConclusao1 = dataInicio1.plusMinutes(30);
+        LocalDateTime dataInicio2 = LocalDateTime.now();
+        LocalDateTime dataConclusao2 = dataInicio2.plusMinutes(60);
+
+        MaterialDeEstudo materialDeEstudo1 = new MaterialDeEstudo();
+        materialDeEstudo1.setDataInicio(dataInicio1);
+        materialDeEstudo1.setDataConclusao(dataConclusao1);
+
+        MaterialDeEstudo materialDeEstudo2 = new MaterialDeEstudo();
+        materialDeEstudo2.setDataInicio(dataInicio2);
+        materialDeEstudo2.setDataConclusao(dataConclusao2);
+
+        Meta meta = new Meta();
+        meta.setMateriaisDeEstudo(Arrays.asList(materialDeEstudo1,materialDeEstudo2));
+
+        when(metaRepository.findById(1L)).thenReturn(Optional.of(meta));
+
+        double resultadoTempoTotal = relatorioService.calcularTempoTotalDedicado(1L);
+
+        verify(metaRepository).findById(1L);
+
+        double resultadoEsperado = 30 + 60;
+
+        assertEquals(resultadoEsperado,resultadoTempoTotal);
+    }
+
+    @Test
+    void testCalcularMediaTempoDiaria() throws Exception{
+        
+        Meta meta = new Meta();
+        meta.setId(1L);
+
+        when(metaRepository.findById(1L)).thenReturn(Optional.of(meta));
+
+        when(relatorioService.calcularTempoTotalDedicado(1L)).thenReturn(3000.0);
+
+        double resultadoMedia = relatorioService.calcularMediaTempoDiaria(1L);
+
+        verify(metaRepository, Mockito.times(1)).findById(1L);
+        verify(relatorioService, Mockito.times(1)).calcularTempoTotalDedicado(1L);
+
+        assertEquals(3000.0,resultadoMedia);
+
+    }
+
+
+    @Test
+    void testCalcularResumosFeitos() throws Exception{
         Meta meta = new Meta();
         meta.setId(1L);
 
