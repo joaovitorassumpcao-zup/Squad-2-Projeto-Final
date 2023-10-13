@@ -19,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -123,9 +124,10 @@ class RelatorioTest {
         verify(relatorioRepository, Mockito.times(1)).deleteById(id);
     }
 
+    Long idMeta = 1L;
+
     @Test
     void testMetaFoiConcluida() {
-        Long idMeta = 1L;
         LocalDateTime dataAntesDeAgora = LocalDateTime.now().minusHours(1);
 
         Meta meta = new Meta();
@@ -142,7 +144,6 @@ class RelatorioTest {
 
     @Test
     void testMetaNãoConcluida() {
-        Long idMeta = 1L;
         LocalDateTime dataDepoisDeAgora = LocalDateTime.now().plusHours(1);
 
         Meta meta = new Meta();
@@ -153,6 +154,27 @@ class RelatorioTest {
         boolean resultado = relatorioService.metaFoiConcluida(idMeta);
 
         Assertions.assertFalse(resultado);
+
+        Mockito.verify(metaRepository, Mockito.times(1)).findById(idMeta);
+    }
+
+    @Test
+    void testCalcularDiasParaMeta() {
+        LocalDateTime dataFinal = LocalDateTime.now().plusDays(3);
+
+        Meta meta = new Meta();
+        meta.setDataFinal(dataFinal);
+
+        Mockito.when(metaRepository.findById(idMeta)).thenReturn(Optional.of(meta));
+
+        LocalDateTime agora = LocalDateTime.now();
+
+        int diasRestantes = relatorioService.calcularDiasParaMeta(idMeta);
+
+        Duration duracao = Duration.between(agora, dataFinal);
+        int diasEsperados = (int) duracao.toDays();
+
+        Assertions.assertEquals(diasEsperados, diasRestantes);
 
         Mockito.verify(metaRepository, Mockito.times(1)).findById(idMeta);
     }
