@@ -1,6 +1,10 @@
 package com.zup.StudyGoals.application;
 
+import com.zup.StudyGoals.data.MetaRepository;
 import com.zup.StudyGoals.data.RelatorioRepository;
+import com.zup.StudyGoals.domain.Categoria;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
+import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.RelatorioDTO;
 import org.junit.jupiter.api.Test;
@@ -32,6 +36,9 @@ class RelatorioTest {
 
     @Mock
     private RelatorioRepository relatorioRepository;
+
+    @Mock
+    private MetaRepository metaRepository;
 
     private Relatorio relatorio;
 
@@ -104,6 +111,21 @@ class RelatorioTest {
     }
 
     void testAlterarRelatorio() throws Exception {
+
+    }
+
+    @Test
+    void testCalcularResumosFeitos(){
+        Meta meta = new Meta();
+        meta.setId(1L);
+
+        when(metaRepository.findById(1L)).thenReturn(Optional.of(meta));
+
+        int resumos = relatorioService.calcularResumosFeitos(1L);
+
+        verify(metaRepository).findById(1L);
+
+        assertEquals(0,resumos);
 
     }
 
