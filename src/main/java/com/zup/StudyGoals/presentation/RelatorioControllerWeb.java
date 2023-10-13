@@ -76,14 +76,6 @@ public class RelatorioControllerWeb {
         return ResponseEntity.ok(relatorioDTO);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> alterarRelatorio(@PathVariable Long id, @RequestBody RelatorioDTO relatorioDTO) {
-        Optional<RelatorioDTO> optionalRelatorioDTO = relatorioService
-                .alterarRelatorio(id, relatorioDTO);
-        if (optionalRelatorioDTO.isPresent()) return ResponseEntity.ok(optionalRelatorioDTO.get());
-        else return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body("Relatorio não encontrado.");
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletarRelatorio(@PathVariable Long id) {
         relatorioService.deletarRelatorio(id);
