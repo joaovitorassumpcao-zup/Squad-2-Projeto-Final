@@ -7,6 +7,8 @@ import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.domain.Relatorio;
 import com.zup.StudyGoals.dto.RelatorioDTO;
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +36,9 @@ class RelatorioTest {
 
     @InjectMocks
     private RelatorioService relatorioService;
+
+    @InjectMocks
+    private MetaService metaService;
 
     @Mock
     private RelatorioRepository relatorioRepository;
@@ -116,6 +121,23 @@ class RelatorioTest {
         Long id = 1L;
         relatorioService.deletarRelatorio(id);
         verify(relatorioRepository, Mockito.times(1)).deleteById(id);
+    }
+
+    @Test
+    void testMetaFoiConcluida() {
+        Long idMeta = 1L;
+        LocalDateTime dataAntesDeAgora = LocalDateTime.now().minusHours(1);
+
+        Meta meta = new Meta();
+        meta.setDataFinal(dataAntesDeAgora);
+
+        Mockito.when(metaRepository.findById(idMeta)).thenReturn(Optional.of(meta));
+
+        boolean resultado = relatorioService.metaFoiConcluida(idMeta);
+
+        Assertions.assertTrue(resultado);
+
+        Mockito.verify(metaRepository, Mockito.times(1)).findById(idMeta);
     }
 
     @Test
