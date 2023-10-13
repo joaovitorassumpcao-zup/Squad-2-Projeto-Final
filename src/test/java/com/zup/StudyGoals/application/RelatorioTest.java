@@ -110,8 +110,11 @@ class RelatorioTest {
         verify(relatorioRepository, Mockito.times(1)).save(any(Relatorio.class));
     }
 
-    void testAlterarRelatorio() throws Exception {
-
+    @Test
+    void testDeletarRelatorio() throws Exception {
+        Long id = 1L;
+        relatorioService.deletarRelatorio(id);
+        verify(relatorioRepository, Mockito.times(1)).deleteById(id);
     }
 
     @Test

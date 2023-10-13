@@ -53,20 +53,6 @@ public class RelatorioService {
         relatorioRepository.save(relatorio);
     }
 
-    public Optional<RelatorioDTO> alterarRelatorio(Long id, RelatorioDTO relatorioDTO) {
-        Optional<Relatorio> relatorioOptional = relatorioRepository.findById(id);
-
-        if (relatorioOptional.isPresent()) {
-            Relatorio relatorio = relatorioOptional.get();
-
-            BeanUtils.copyProperties(relatorioDTO, relatorio, "id");
-            relatorioRepository.save(relatorio);
-
-            return Optional.of(RelatorioDTOMapper.INSTANCE.relatorioParaDTO(relatorio));
-        }
-        else return Optional.empty();
-    }
-
     public void deletarRelatorio(Long id) {
         relatorioRepository.deleteById(id);
     }
