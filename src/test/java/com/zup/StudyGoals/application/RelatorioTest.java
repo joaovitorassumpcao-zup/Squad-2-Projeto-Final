@@ -141,6 +141,23 @@ class RelatorioTest {
     }
 
     @Test
+    void testMetaNãoConcluida() {
+        Long idMeta = 1L;
+        LocalDateTime dataDepoisDeAgora = LocalDateTime.now().plusHours(1);
+
+        Meta meta = new Meta();
+        meta.setDataFinal(dataDepoisDeAgora);
+
+        Mockito.when(metaRepository.findById(idMeta)).thenReturn(Optional.of(meta));
+
+        boolean resultado = relatorioService.metaFoiConcluida(idMeta);
+
+        Assertions.assertFalse(resultado);
+
+        Mockito.verify(metaRepository, Mockito.times(1)).findById(idMeta);
+    }
+
+    @Test
     void testCalcularTempoTotalDedicado() throws Exception{
         LocalDateTime dataInicio1 = LocalDateTime.now();
         LocalDateTime dataConclusao1 = dataInicio1.plusMinutes(30);
