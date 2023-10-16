@@ -1,14 +1,12 @@
 package com.zup.StudyGoals.presentation.apiclient;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 
 import java.io.IOException;
 
 public class ApiClient {
 
-    private static OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client = new OkHttpClient();
 
     private final String LOCAL_URL = "https://localhost:8080/api";
 
@@ -20,5 +18,15 @@ public class ApiClient {
             assert response.body() != null;
             return response.body().string();
         }
+    }
+
+    public String postRequest(RequestBody formBody, String postEndpoint) throws IOException {
+        Request request = new Request.Builder()
+                .url(LOCAL_URL + postEndpoint)
+                .post(formBody)
+                .build();
+        Call call = client.newCall(request);
+        Response response = call.execute();
+        return response.body().string();
     }
 }
