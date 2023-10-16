@@ -12,4 +12,13 @@ public class ApiClient {
 
     private final String LOCAL_URL = "https://localhost:8080/api";
 
+    public String getRequest(String getEndpoint) throws IOException {
+        Request request = new Request.Builder()
+                .url(LOCAL_URL + getEndpoint)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            assert response.body() != null;
+            return response.body().string();
+        }
+    }
 }
