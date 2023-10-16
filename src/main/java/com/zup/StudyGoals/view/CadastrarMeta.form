@@ -29,7 +29,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Data de início"/>
+          <text value="Data de início:"/>
         </properties>
       </component>
       <component id="b2ec6" class="javax.swing.JTextField" binding="dataInicio">
@@ -45,7 +45,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Data final"/>
+          <text value="Data final:"/>
         </properties>
       </component>
       <component id="a7ecd" class="javax.swing.JTextField" binding="dataFinal">
@@ -61,7 +61,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Minutos por dia"/>
+          <text value="Minutos por dia:"/>
         </properties>
       </component>
       <component id="ba2a3" class="javax.swing.JTextField" binding="minutos">
@@ -77,7 +77,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Objetivo"/>
+          <text value="Objetivo:"/>
         </properties>
       </component>
       <component id="1dfeb" class="javax.swing.JTextField" binding="objetivo">

@@ -14,6 +14,8 @@ public class MenuPrincipal extends JFrame{
     private JButton gerarRelatorioDeUmaButton;
     private JButton verTodosOsRelatoriosButton;
     private JButton deletarRelatorioButton;
+    private JButton editarUmaMetaButton;
+    private JButton verMateriaisDeEstudoButton;
 
     public static void main(String[] args) {
         MenuPrincipal menuPrincipal = new MenuPrincipal();
@@ -27,7 +29,7 @@ public class MenuPrincipal extends JFrame{
         setContentPane(menu);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(350, 300);
+        setSize(350, 400);
         setTitle("Menu Principal");
         setResizable(false);
         setVisible(true);
@@ -86,6 +88,13 @@ public class MenuPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 DeletarRelatorio deletarRelatorio = new DeletarRelatorio();
+            }
+        });
+
+        editarUmaMetaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EditarMeta editarMeta = new EditarMeta();
             }
         });
     }
