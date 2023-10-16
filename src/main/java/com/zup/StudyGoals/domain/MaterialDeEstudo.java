@@ -40,13 +40,14 @@ public class MaterialDeEstudo implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataConclusao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meta_materiais_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Meta metas;
-
-    public boolean materialTemUmaMeta (Meta meta){
-        return this.metas != null && this.metas.equals(meta);
+    public MaterialDeEstudo(Long id, String titulo, Categoria categoria, String url, String resumo, LocalDateTime dataInicio, LocalDateTime dataConclusao, Meta meta) {
     }
+
+
+//
+//    public boolean materialTemUmaMeta (Meta meta){
+//        return this.metas != null && this.metas.equals(meta);
+//    }
 
     public Long getId() {
         return id;
@@ -104,12 +105,5 @@ public class MaterialDeEstudo implements Serializable {
         this.dataConclusao = dataConclusao;
     }
 
-    public Meta getMetas() {
-        return metas;
-    }
 
-    public void setMetas(Meta metas) {
-        this.metas = metas;
-        System.out.println("ADICIONANDO META " + metas);
-    }
 }

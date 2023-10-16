@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -54,7 +56,7 @@ class MetaControllerWebTest {
     @Test
     void listarTodasAsMetas() throws Exception{
 
-        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"));
         List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
         listaMaterial.add(materialDeEstudo);
 
@@ -76,7 +78,7 @@ class MetaControllerWebTest {
     @Test
     void testeBuscarMetaPorId() throws Exception{
 
-        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"));
         List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
         listaMaterial.add(materialDeEstudo);
 
@@ -94,7 +96,7 @@ class MetaControllerWebTest {
 
     @Test
     void testeAdicionarNovaMeta() throws Exception{
-        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+        MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"));
         List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
         listaMaterial.add(materialDeEstudo);
 
@@ -106,13 +108,29 @@ class MetaControllerWebTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("Nova meta adicionada com sucesso! "));
-
+                .andExpect(content().string("Nova meta criada com sucesso! "));
     }
 
-    @Disabled
     @Test
     void testeAlterarMeta() throws Exception{
+
+            MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+            List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
+            listaMaterial.add(materialDeEstudo);
+
+            Meta meta = new Meta(1L, "Inglês", LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-30T08:00:00") , 30, "Melhorar gramática", listaMaterial);
+
+            String json = objectMapper.writeValueAsString(meta);
+
+            when(metaService.editarMeta(eq(1L),any(Meta.class))).thenReturn(meta);
+
+            mockMvc.perform(put("/api/metas/{id}", 1L)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string("Meta alterada com sucesso! "));
+
+
     }
 
     @Test
