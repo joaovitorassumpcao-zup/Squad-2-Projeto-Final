@@ -16,7 +16,7 @@
           <text value="Selecione a meta:"/>
         </properties>
       </component>
-      <component id="a45d1" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+      <component id="a45d1" class="javax.swing.JComboBox" binding="metas">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -30,7 +30,7 @@
           <text value="Assunto da meta:"/>
         </properties>
       </component>
-      <component id="7961e" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="7961e" class="javax.swing.JTextField" binding="assunto">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -38,7 +38,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="41b26" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+      <component id="41b26" class="javax.swing.JTextField" binding="dataInicio">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -46,7 +46,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="116db" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+      <component id="116db" class="javax.swing.JTextField" binding="dataFinal">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -54,7 +54,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="1a793" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+      <component id="1a793" class="javax.swing.JTextField" binding="minutos">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -62,7 +62,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="d228f" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+      <component id="d228f" class="javax.swing.JTextField" binding="objetivo">
         <constraints>
           <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>

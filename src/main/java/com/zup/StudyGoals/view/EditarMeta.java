@@ -3,12 +3,12 @@ package com.zup.StudyGoals.view;
 import javax.swing.*;
 
 public class EditarMeta extends JFrame{
-    private JComboBox comboBox1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
+    private JComboBox metas;
+    private JTextField assunto;
+    private JTextField dataInicio;
+    private JTextField dataFinal;
+    private JTextField minutos;
+    private JTextField objetivo;
     private JButton atualizarMetaButton;
     private JPanel editarMeta;
 
