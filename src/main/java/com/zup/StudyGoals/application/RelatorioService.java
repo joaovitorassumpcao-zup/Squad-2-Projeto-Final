@@ -153,9 +153,11 @@ public class RelatorioService {
 
         int dias = 0;
 
-        while (tempoTotal > 1440) {
+        double tempoTotalPraCalculo = tempoTotal;
+
+        while (tempoTotalPraCalculo > 1440) {
             dias += 1;
-            tempoTotal -= 1440;
+            tempoTotalPraCalculo -= 1440;
         }
 
         return tempoTotal / dias;
