@@ -1,11 +1,29 @@
 package com.zup.StudyGoals.view;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.zup.StudyGoals.domain.Meta;
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
+import org.apache.coyote.Request;
+import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
+import com.zup.StudyGoals.presentation.apiclient.ApiClient;
 
 public class VerMetas extends JFrame {
+
+    private DefaultTableModel tableModel;
+    private JTable table;
+
+    ApiClient apiClient = new ApiClient();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     public VerMetas() {
 
@@ -16,31 +34,15 @@ public class VerMetas extends JFrame {
         this.setLayout(null);
         this.setResizable(false);
 
-        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel = new DefaultTableModel();
 
-        //Código de exemplo de adicionar colunas na tabela
-        //ToDo modificar o código abaixo para se encaixar na nossa situação
-        //String sql = "select * from atividades order by id ASC;";
-//        try {
-//            ResultSet resultSet = dadosService.getStatement().executeQuery(sql);
-//
-//            for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++){
-//                tableModel.addColumn(resultSet.getMetaData().getColumnName(i));
-//            }
-//
-//            while (resultSet.next()){
-//                Object[] row = new Object[resultSet.getMetaData().getColumnCount()];
-//                for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-//                    row[i - 1] = resultSet.getObject(i);
-//                }
-//                tableModel.addRow(row);
-//            }
-//
-//        } catch (SQLException e){
-//            e.printStackTrace();
-//        }
+        try {
+            fazerRequisicaoGET();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
-        JTable table = new JTable(tableModel);
+        table = new JTable(tableModel);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setViewportView(table);
@@ -49,5 +51,29 @@ public class VerMetas extends JFrame {
         this.add(scrollPane);
 
         this.setVisible(true);
+    }
+
+    private void fazerRequisicaoGET() throws IOException {
+        ResponseBody resposta = apiClient.getRequest("/metas");
+        List<Meta> metas = objectMapper.readValue(resposta.string(),
+                TypeFactory.defaultInstance().constructCollectionType(List.class, Meta.class));
+
+        preencherTabelaComDados(metas);
+    }
+
+    private void preencherTabelaComDados(List<Meta> metas) {
+        tableModel.setRowCount(0);
+
+        for (Meta meta : metas) {
+            Object[] rowData = {meta.getId(),
+                    meta.getAssunto(),
+                    meta.getDataDeInicio(),
+                    meta.getDataFinal(),
+                    meta.getMetaMinutosDia(),
+                    meta.getObjetivo(),
+                    meta.getMateriaisDeEstudo()};
+
+            tableModel.addRow(rowData);
+        }
     }
 }
