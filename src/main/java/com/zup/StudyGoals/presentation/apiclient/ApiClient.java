@@ -8,7 +8,7 @@ public class ApiClient {
 
     private final OkHttpClient client = new OkHttpClient();
 
-    private final String LOCAL_URL = "https://localhost:8080/api";
+    private final String LOCAL_URL = "http://localhost:8080/api";
 
     public ResponseBody getRequest(String getEndpoint) throws IOException {
         Request request = new Request.Builder()
