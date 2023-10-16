@@ -59,11 +59,16 @@ public class VerMetas extends JFrame {
     }
 
     private void fazerRequisicaoGET() throws IOException {
-        ResponseBody resposta = apiClient.getRequest("/metas");
-        List<Meta> metas = objectMapper.readValue(resposta.string(),
-                TypeFactory.defaultInstance().constructCollectionType(List.class, Meta.class));
+        String response = null;
+        try {
+            response = apiClient.getRequest("/metas");
+            List<Meta> metas = objectMapper.readValue(response,
+                    TypeFactory.defaultInstance().constructCollectionType(List.class, Meta.class));
 
-        preencherTabelaComDados(metas);
+            preencherTabelaComDados(metas);
+        } catch (IOException e) {
+            e.printStackTrace();;
+        }
     }
 
     private void preencherTabelaComDados(List<Meta> metas) {
