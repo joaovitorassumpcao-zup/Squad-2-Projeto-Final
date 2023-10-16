@@ -2,6 +2,7 @@ package com.zup.StudyGoals.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.zup.StudyGoals.domain.Meta;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -22,8 +23,8 @@ public class VerMetas extends JFrame {
     private DefaultTableModel tableModel;
     private JTable table;
 
-    ApiClient apiClient = new ApiClient();
-    private ObjectMapper objectMapper = new ObjectMapper();
+    ApiClient apiClient;
+    private ObjectMapper objectMapper;
 
     public VerMetas() {
 
@@ -33,6 +34,10 @@ public class VerMetas extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
+
+        this.apiClient = new ApiClient();
+        this.objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
 
         tableModel = new DefaultTableModel();
 
