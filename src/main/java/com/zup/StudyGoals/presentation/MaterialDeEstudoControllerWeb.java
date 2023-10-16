@@ -37,8 +37,8 @@ public class MaterialDeEstudoControllerWeb {
     }
 
     //ENDPOINT POST
-    @PostMapping
-    public ResponseEntity<?> criarMaterial (@RequestBody MaterialDeEstudoDTO materialDeEstudoDTO){
+    @PostMapping("/{id}")
+    public ResponseEntity<?> criarMaterial (@RequestParam Long metaId,@RequestBody MaterialDeEstudoDTO materialDeEstudoDTO){
 
         MaterialDeEstudo novoMaterial = new MaterialDeEstudo();
         novoMaterial.setTitulo(materialDeEstudoDTO.getTitulo());
@@ -48,7 +48,7 @@ public class MaterialDeEstudoControllerWeb {
         novoMaterial.setDataInicio(materialDeEstudoDTO.getDataInicio());
         novoMaterial.setDataConclusao(materialDeEstudoDTO.getDataConclusao());
 
-        Long metaId = materialDeEstudoDTO.getMetas().getId();
+        //Long metaId = materialDeEstudoDTO.getMetas().getId();
 
         materialDeEstudoService.cadastrarMaterial(novoMaterial, metaId);
 
