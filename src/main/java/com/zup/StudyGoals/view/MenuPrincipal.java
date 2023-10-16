@@ -97,5 +97,12 @@ public class MenuPrincipal extends JFrame{
                 EditarMeta editarMeta = new EditarMeta();
             }
         });
+
+        verMateriaisDeEstudoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VerMateriais verMateriais = new VerMateriais();
+            }
+        });
     }
 }
