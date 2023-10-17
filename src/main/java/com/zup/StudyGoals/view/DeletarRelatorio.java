@@ -11,7 +11,7 @@ public class DeletarRelatorio extends JFrame{
         setContentPane(deletaRelatorio);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(350, 150);
+        setSize(400, 150);
         setTitle("Deletar relatório");
         setVisible(true);
     }

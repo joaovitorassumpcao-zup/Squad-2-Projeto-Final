@@ -1,7 +1,6 @@
 package com.zup.StudyGoals.view;
 
 import com.zup.StudyGoals.presentation.apiclient.ApiClient;
-import okhttp3.ResponseBody;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +11,7 @@ public class DeletarMeta extends JFrame{
     private JButton deletarMetaButton;
     private ApiClient apiClient;
     private JPanel deletarMeta;
+    private JComboBox metas;
 
     public DeletarMeta() {
         this.apiClient = new ApiClient();
@@ -37,7 +37,7 @@ public class DeletarMeta extends JFrame{
         setContentPane(deletarMeta);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(350, 150);
+        setSize(400, 150);
         setTitle("Deletar meta");
         setVisible(true);
     }

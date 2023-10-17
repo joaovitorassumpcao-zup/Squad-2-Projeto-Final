@@ -1,5 +1,6 @@
 package com.zup.StudyGoals.view;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -27,6 +28,13 @@ public class DeletarMaterial extends JDialog {
         this.apiClient = new ApiClient();
         this.objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        setContentPane(contentPane);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setSize(400, 150);
+        setTitle("Deletar um material de estudo");
 
         // Buscar todos os materiais para preencher o combobox
         String response = null;
@@ -55,12 +63,7 @@ public class DeletarMaterial extends JDialog {
             }
         });
 
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-        DeletarMaterial dialog = new DeletarMaterial();
-        dialog.pack();
-        dialog.setVisible(true);
+        setVisible(true);
     }
 
     private void preecherComboBox(@NotNull List<MaterialDeEstudo> materiais) {
