@@ -26,8 +26,11 @@ public class ApiClient {
                 .post(formBody)
                 .build();
         Call call = client.newCall(request);
-        Response response = call.execute();
-        return response.body();
+        try (Response response = call.execute()) {
+            assert response.body() != null;
+            return response.body();
+        }
+    }
     }
 
     public String deleteRequest(String deleteEndpoint) throws IOException {
