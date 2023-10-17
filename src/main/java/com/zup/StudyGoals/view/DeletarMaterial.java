@@ -54,7 +54,9 @@ public class DeletarMaterial extends JDialog {
         deletarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String materialId = String.valueOf(materiaisCombo.getSelectedIndex());
+                MaterialDeEstudo material = (MaterialDeEstudo) materiaisCombo.getSelectedItem();
+                assert material != null;
+                String materialId = material.getId().toString();
                 try {
                     apiClient.deleteRequest("/materiais/" + materialId);
                 } catch (IOException ex) {
