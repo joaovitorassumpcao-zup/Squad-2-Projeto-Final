@@ -8,6 +8,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface RelatorioDTOMapper {
     RelatorioDTOMapper INSTANCE = Mappers.getMapper(RelatorioDTOMapper.class);
-    RelatorioDTO relatorioParaDTO(Relatorio relatorio);
-    Relatorio DTOParaRelatorio(RelatorioDTO relatorioDTO);
+//    RelatorioDTO relatorioParaDTO(Relatorio relatorio);
+//    Relatorio DTOParaRelatorio(RelatorioDTO relatorioDTO);
 }
