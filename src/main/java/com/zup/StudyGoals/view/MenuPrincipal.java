@@ -29,7 +29,7 @@ public class MenuPrincipal extends JFrame{
         setContentPane(menu);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(350, 400);
+        setSize(350, 350);
         setTitle("Menu Principal");
         setResizable(false);
         setVisible(true);
@@ -53,13 +53,6 @@ public class MenuPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 VerMetas verMetas = new VerMetas();
-            }
-        });
-
-        adicionarUmMaterialAButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AdicionarMaterial adicionarMaterial = new AdicionarMaterial();
             }
         });
 
