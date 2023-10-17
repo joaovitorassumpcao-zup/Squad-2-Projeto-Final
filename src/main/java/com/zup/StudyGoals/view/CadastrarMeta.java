@@ -41,7 +41,7 @@ public class CadastrarMeta extends JFrame{
                     RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
                     ResponseBody resposeBody = apiClient.postRequest(requestBody, "/metas");
 
-                    JOptionPane.showMessageDialog(null, resposeBody, "Meta cadastrada.",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, resposeBody.string(), "Meta cadastrada.",JOptionPane.INFORMATION_MESSAGE);
                 }catch (IOException | NumberFormatException exception) {
                     exception.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao cadastrar nova meta! ", "ERRO",JOptionPane.ERROR_MESSAGE);
