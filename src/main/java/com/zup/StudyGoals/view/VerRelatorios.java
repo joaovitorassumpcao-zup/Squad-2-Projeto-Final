@@ -64,7 +64,7 @@ public class VerRelatorios extends JFrame {
         try {
             response = apiClient.getRequest("/relatorios");
             List<Relatorio> relatorios = objectMapper.readValue(response,
-                    TypeFactory.defaultInstance().constructCollectionType(List.class, Meta.class));
+                    TypeFactory.defaultInstance().constructCollectionType(List.class, Relatorio.class));
 
             preencherTabelaComDados(relatorios);
         } catch (IOException e) {
@@ -74,7 +74,7 @@ public class VerRelatorios extends JFrame {
     private void preencherTabelaComDados(List<Relatorio> relatorios) {
         tableModel.addColumn("ID");
         tableModel.addColumn("ID da Meta");
-        //tableModel.addColumn("Hora do Registro");
+        tableModel.addColumn("Hora do Registro");
         tableModel.addColumn("Tempo total (minutos)");
         tableModel.addColumn("Média de tempo (minutos)");
         tableModel.addColumn("Total de resumos");
@@ -87,7 +87,7 @@ public class VerRelatorios extends JFrame {
         for (Relatorio relatorio : relatorios) {
             Object[] rowData = {relatorio.getId(),
                     relatorio.getMetaId(),
-                    //relatorio.getHoraRegistro(),
+                    relatorio.getHoraRegistro(),
                     relatorio.getTempoTotal(),
                     relatorio.getMediaTempo(),
                     relatorio.getTotalResumos(),
