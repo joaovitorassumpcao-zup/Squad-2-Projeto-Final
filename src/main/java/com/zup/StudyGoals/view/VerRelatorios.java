@@ -1,5 +1,8 @@
 package com.zup.StudyGoals.view;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -68,11 +71,10 @@ public class VerRelatorios extends JFrame {
             e.printStackTrace();
         }
     }
-
     private void preencherTabelaComDados(List<Relatorio> relatorios) {
         tableModel.addColumn("ID");
         tableModel.addColumn("ID da Meta");
-        tableModel.addColumn("Hora do Registro");
+        //tableModel.addColumn("Hora do Registro");
         tableModel.addColumn("Tempo total (minutos)");
         tableModel.addColumn("Média de tempo (minutos)");
         tableModel.addColumn("Total de resumos");
@@ -85,7 +87,7 @@ public class VerRelatorios extends JFrame {
         for (Relatorio relatorio : relatorios) {
             Object[] rowData = {relatorio.getId(),
                     relatorio.getMetaId(),
-                    relatorio.getHoraRegistro(),
+                    //relatorio.getHoraRegistro(),
                     relatorio.getTempoTotal(),
                     relatorio.getMediaTempo(),
                     relatorio.getTotalResumos(),
