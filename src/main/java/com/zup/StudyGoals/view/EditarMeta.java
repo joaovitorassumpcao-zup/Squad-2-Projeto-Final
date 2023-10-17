@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class EditarMeta extends JFrame{
-    private JComboBox metas;
     private JTextField assunto;
     private JTextField dataInicio;
     private JTextField dataFinal;
