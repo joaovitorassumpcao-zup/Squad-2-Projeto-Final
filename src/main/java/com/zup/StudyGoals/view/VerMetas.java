@@ -40,13 +40,6 @@ public class VerMetas extends JFrame {
         objectMapper.registerModule(new JavaTimeModule());
 
         tableModel = new DefaultTableModel();
-
-        try {
-            fazerRequisicaoGET();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
         table = new JTable(tableModel);
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -54,6 +47,14 @@ public class VerMetas extends JFrame {
         scrollPane.setBounds(10, 10, 760, 540);
 
         this.add(scrollPane);
+
+        try {
+            fazerRequisicaoGET();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        tableModel.fireTableDataChanged();
 
         this.setVisible(true);
     }
@@ -67,11 +68,19 @@ public class VerMetas extends JFrame {
 
             preencherTabelaComDados(metas);
         } catch (IOException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 
     private void preencherTabelaComDados(List<Meta> metas) {
+        tableModel.addColumn("ID");
+        tableModel.addColumn("Assunto");
+        tableModel.addColumn("Data de iníco");
+        tableModel.addColumn("Data final");
+        tableModel.addColumn("Meta de minutos por dia");
+        tableModel.addColumn("Objetivo");
+        tableModel.addColumn("Materiais de estudo");
+
         tableModel.setRowCount(0);
 
         for (Meta meta : metas) {
