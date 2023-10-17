@@ -2,18 +2,20 @@ package com.zup.StudyGoals.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.presentation.apiclient.ApiClient;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CadastrarMeta extends JFrame{
     private JTextField assunto;
@@ -23,8 +25,11 @@ public class CadastrarMeta extends JFrame{
     private JTextField objetivo;
     private JButton salvarMetaButton;
     private JPanel cadastrarMeta;
+    private JButton adicionarMaterialButton;
     private ApiClient apiClient;
     private ObjectMapper objectMapper;
+
+    public List<MaterialDeEstudo> materialDeEstudos = new ArrayList<>();
 
     public CadastrarMeta() {
         this.apiClient = new ApiClient();
@@ -34,7 +39,8 @@ public class CadastrarMeta extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Meta meta = new Meta(assunto.getText(),dataInicio.getText(),dataFinal.getText(),Integer.parseInt(minutos.getText()),objetivo.getText()
+                    Meta meta = new Meta(assunto.getText(),dataInicio.getText(),dataFinal.getText(),Integer.parseInt(minutos.getText()),
+                            objetivo.getText(), materialDeEstudos
                     );
 
                     String jsonBody = objectMapper.writeValueAsString(meta);
@@ -46,6 +52,13 @@ public class CadastrarMeta extends JFrame{
                     exception.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao cadastrar nova meta! ", "ERRO",JOptionPane.ERROR_MESSAGE);
                 }
+            }
+        });
+
+        adicionarMaterialButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AdicionarMaterial adicionarMaterial = new AdicionarMaterial();
             }
         });
 

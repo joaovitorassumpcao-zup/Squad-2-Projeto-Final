@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.asm.Advice;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -41,6 +43,9 @@ public class MaterialDeEstudo implements Serializable {
     private LocalDateTime dataConclusao;
 
     public MaterialDeEstudo(Long id, String titulo, Categoria categoria, String url, String resumo, LocalDateTime dataInicio, LocalDateTime dataConclusao, Meta meta) {
+    }
+
+    public MaterialDeEstudo(String titulo, Categoria categoria, String url, String resumo, String dataInicio, String dataConclusao) {
     }
 
 
