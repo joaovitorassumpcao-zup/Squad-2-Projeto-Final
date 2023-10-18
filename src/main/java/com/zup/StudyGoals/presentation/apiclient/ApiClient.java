@@ -20,6 +20,7 @@ public class ApiClient {
         }
     }
 
+    // POST com form
     public ResponseBody postRequest(RequestBody formBody, String postEndpoint) throws IOException {
         Request request = new Request.Builder()
                 .url(LOCAL_URL + postEndpoint)
@@ -32,6 +33,7 @@ public class ApiClient {
         }
     }
 
+    // POST simples sem parametros
     public ResponseBody postRequest(String postEndpoint) throws IOException {
         Request request = new Request.Builder()
                 .url(LOCAL_URL + postEndpoint)
@@ -43,6 +45,21 @@ public class ApiClient {
         }
     }
 
+    // POST com um parametro
+    public ResponseBody postRequest(String postEndpoint, String paramChave, String paramValor) throws IOException {
+        RequestBody requestBody = new FormBody.Builder()
+                .addEncoded(paramChave, paramValor)
+                .build();
+        Request request = new Request.Builder()
+                .url(LOCAL_URL + postEndpoint)
+                .post(requestBody)
+                .build();
+        Call call = client.newCall(request);
+        try (Response response = call.execute()) {
+            assert response.body() != null;
+            return response.body();
+        }
+    }
 
     public ResponseBody putRequest(RequestBody formBody, String postEndpoint) throws IOException {
         Request request = new Request.Builder()
