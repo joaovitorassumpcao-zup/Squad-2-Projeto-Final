@@ -2,6 +2,7 @@ package com.zup.StudyGoals.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.presentation.apiclient.ApiClient;
 import okhttp3.MediaType;
@@ -12,6 +13,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 
 public class EditarMeta extends JFrame{
     private JTextField assunto;
@@ -23,6 +25,7 @@ public class EditarMeta extends JFrame{
     private ApiClient apiClient;
     private ObjectMapper objectMapper;
     private JPanel editarMeta;
+    public List<MaterialDeEstudo> materiaisDeEstudo;
 
     public EditarMeta() {
 //        this.apiClient = new ApiClient();

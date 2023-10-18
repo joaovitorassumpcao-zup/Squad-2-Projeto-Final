@@ -107,5 +107,16 @@ public class MaterialDeEstudo implements Serializable {
         this.dataConclusao = dataConclusao;
     }
 
-
+    @Override
+    public String toString() {
+        return "MaterialDeEstudo{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", categoria=" + categoria +
+                ", url='" + url + '\'' +
+                ", resumo='" + resumo + '\'' +
+                ", dataInicio=" + dataInicio +
+                ", dataConclusao=" + dataConclusao +
+                '}';
+    }
 }

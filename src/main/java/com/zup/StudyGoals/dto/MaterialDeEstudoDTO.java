@@ -90,4 +90,17 @@ public class MaterialDeEstudoDTO implements Serializable {
     public void setDataConclusao(LocalDateTime dataConclusao) {
         this.dataConclusao = dataConclusao;
     }
+
+    @Override
+    public String toString() {
+        return "MaterialDeEstudoDTO{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", categoria=" + categoria +
+                ", url='" + url + '\'' +
+                ", resumo='" + resumo + '\'' +
+                ", dataInicio=" + dataInicio +
+                ", dataConclusao=" + dataConclusao +
+                '}';
+    }
 }
