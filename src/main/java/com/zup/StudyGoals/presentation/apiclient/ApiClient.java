@@ -32,6 +32,18 @@ public class ApiClient {
         }
     }
 
+    public ResponseBody postRequest(String postEndpoint) throws IOException {
+        Request request = new Request.Builder()
+                .url(LOCAL_URL + postEndpoint)
+                .build();
+        Call call = client.newCall(request);
+        try (Response response = call.execute()) {
+            assert response.body() != null;
+            return response.body();
+        }
+    }
+
+
     public ResponseBody putRequest(RequestBody formBody, String postEndpoint) throws IOException {
         Request request = new Request.Builder()
                 .url(LOCAL_URL + postEndpoint)
