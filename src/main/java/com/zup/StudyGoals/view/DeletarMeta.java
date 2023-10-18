@@ -13,7 +13,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DeletarMeta extends JFrame{
     private JButton deletarMetaButton;
@@ -21,6 +23,7 @@ public class DeletarMeta extends JFrame{
     private ObjectMapper objectMapper;
     private JPanel deletarMeta;
     private JComboBox metas;
+    private Map<String, Meta> assuntoMap = new HashMap<>();
 
     public DeletarMeta() {
         this.apiClient = new ApiClient();
@@ -45,7 +48,8 @@ public class DeletarMeta extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Meta metaASerDeletada = (Meta) metas.getSelectedItem();
+                String assunto = (String) metas.getSelectedItem();
+                Meta metaASerDeletada = assuntoMap.get(assunto);
                 assert metaASerDeletada != null;
                 String metaId = metaASerDeletada.getId().toString();
                 try {
@@ -69,6 +73,9 @@ public class DeletarMeta extends JFrame{
         setVisible(true);
     }
     private void preecherComboBox(@NotNull List<Meta> listaMetas) {
-        listaMetas.forEach(meta -> metas.addItem(meta.getAssunto()));
+        for(Meta meta : listaMetas){
+            metas.addItem(meta.getAssunto());
+            assuntoMap.put(meta.getAssunto(), meta);
+        }
     }
 }
