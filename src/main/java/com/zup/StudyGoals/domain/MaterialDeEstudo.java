@@ -42,8 +42,13 @@ public class MaterialDeEstudo implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataConclusao;
 
-
     public MaterialDeEstudo(String titulo, Categoria categoria, String url, String resumo, String dataInicio, String dataConclusao) {
+        this.titulo = titulo;
+        this.categoria = categoria;
+        this.url = url;
+        this.resumo = resumo;
+        this.dataInicio = LocalDateTime.parse(dataInicio);
+        this.dataConclusao = LocalDateTime.parse(dataConclusao);
     }
 
     public Long getId() {

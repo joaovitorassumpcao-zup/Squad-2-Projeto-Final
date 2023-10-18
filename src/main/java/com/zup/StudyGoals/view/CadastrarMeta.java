@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,25 +30,33 @@ public class CadastrarMeta extends JFrame{
     private ApiClient apiClient;
     private ObjectMapper objectMapper;
 
-    public List<MaterialDeEstudo> materialDeEstudos = new ArrayList<>();
+    public List<MaterialDeEstudo> materiaisDeEstudo;
 
     public CadastrarMeta() {
+        this.materiaisDeEstudo = new ArrayList<>();
         this.apiClient = new ApiClient();
         this.objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
+
         salvarMetaButton.addActionListener(new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Meta meta = new Meta();
+                meta.setAssunto(assunto.getText());
+                meta.setDataDeInicio(LocalDateTime.parse(dataInicio.getText()));
+                meta.setDataFinal(LocalDateTime.parse(dataFinal.getText()));
+                meta.setMetaMinutosDia(Integer.parseInt(minutos.getText()));
+                meta.setMateriaisDeEstudo(materiaisDeEstudo);
+                meta.setObjetivo(objetivo.getText());
+
                 try{
-                    Meta meta = new Meta(assunto.getText(),dataInicio.getText(),dataFinal.getText(),Integer.parseInt(minutos.getText()),
-                            objetivo.getText(), materialDeEstudos
-                    );
-
+                    System.out.println("META ANTES DE SERIALIZAR: " + meta);
                     String jsonBody = objectMapper.writeValueAsString(meta);
+                    System.out.println("META DEPOIS DE SERIALIZAR: " + jsonBody);
+                    System.out.println("JSON A SER ENVIADO: " + jsonBody);
                     RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
-                    ResponseBody resposeBody = apiClient.postRequest(requestBody, "/metas");
-
-                    JOptionPane.showMessageDialog(null, resposeBody.string(), "Meta cadastrada.",JOptionPane.INFORMATION_MESSAGE);
+                    apiClient.postRequest(requestBody, "/metas");
+                    JOptionPane.showMessageDialog(null,"Meta cadastrada com sucesso! ");
                 }catch (IOException | NumberFormatException exception) {
                     exception.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Erro ao cadastrar nova meta! ", "ERRO",JOptionPane.ERROR_MESSAGE);
@@ -58,7 +67,8 @@ public class CadastrarMeta extends JFrame{
         adicionarMaterialButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AdicionarMaterial adicionarMaterial = new AdicionarMaterial();
+                AdicionarMaterial adicionarMaterial = new AdicionarMaterial(CadastrarMeta.this);
+                adicionarMaterial.setVisible(true);
             }
         });
 
@@ -69,4 +79,15 @@ public class CadastrarMeta extends JFrame{
         setTitle("Cadastrar meta");
         setVisible(true);
     }
+
+    public void adicionarMaterial (MaterialDeEstudo materialDeEstudo){
+
+        if(materialDeEstudo != null) {
+            this.materiaisDeEstudo.add(materialDeEstudo);
+            System.out.println("Material adicionado: " + materialDeEstudo);
+        }else {
+            System.out.println("MATERIAL NULO");
+        }
+    }
+
 }

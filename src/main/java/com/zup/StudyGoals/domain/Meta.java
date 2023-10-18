@@ -42,14 +42,6 @@ public class Meta implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MaterialDeEstudo> materiaisDeEstudo = new ArrayList<>();
 
-    public Meta (String assunto, String dataInicio, String dataFinal, int metaMinutosDia, String objetivo){
-        this.assunto = assunto;
-        this.dataDeInicio = LocalDateTime.parse(dataInicio);
-        this.dataFinal = LocalDateTime.parse(dataFinal);
-        this.metaMinutosDia = metaMinutosDia;
-        this.objetivo = objetivo;
-    }
-
     public Meta (String assunto, String dataInicio, String dataFinal, int metaMinutosDia, String objetivo,
                  List<MaterialDeEstudo> materialDeEstudos){
         this.assunto = assunto;

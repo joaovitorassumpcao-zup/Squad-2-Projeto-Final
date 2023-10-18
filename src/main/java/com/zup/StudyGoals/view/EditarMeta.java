@@ -25,28 +25,28 @@ public class EditarMeta extends JFrame{
     private JPanel editarMeta;
 
     public EditarMeta() {
-        this.apiClient = new ApiClient();
-        this.objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        Long idMeta = pegarIdMeta();
-        atualizarMetaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-
-                    Meta metaEditada = new Meta(assunto.getText(),dataInicio.getText(),dataFinal.getText(),  Integer.parseInt(minutos.getText()),objetivo.getText());
-
-                    String jsonBody = objectMapper.writeValueAsString(metaEditada);
-                    RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),jsonBody);
-                    ResponseBody responseBody = apiClient.putRequest(requestBody,"/metas/" + idMeta);
-                    JOptionPane.showMessageDialog(null, responseBody.string(), "Meta editada com sucesso.",JOptionPane.INFORMATION_MESSAGE);
-                }catch (IOException | NumberFormatException exception){
-                    exception.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Erro ao editar a meta! ", "ERRO",JOptionPane.ERROR_MESSAGE);
-                }
-            }
-
-        });
+//        this.apiClient = new ApiClient();
+//        this.objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new JavaTimeModule());
+//        Long idMeta = pegarIdMeta();
+//        atualizarMetaButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                try{
+//                    // deletar segundo constructor de meta quando corrigir adicionar material com uma meta
+//                    Meta metaEditada = new Meta(assunto.getText(),dataInicio.getText(),dataFinal.getText(),  Integer.parseInt(minutos.getText()),objetivo.getText());
+//
+//                    String jsonBody = objectMapper.writeValueAsString(metaEditada);
+//                    RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),jsonBody);
+//                    ResponseBody responseBody = apiClient.putRequest(requestBody,"/metas/" + idMeta);
+//                    JOptionPane.showMessageDialog(null, responseBody.string(), "Meta editada com sucesso.",JOptionPane.INFORMATION_MESSAGE);
+//                }catch (IOException | NumberFormatException exception){
+//                    exception.printStackTrace();
+//                    JOptionPane.showMessageDialog(null, "Erro ao editar a meta! ", "ERRO",JOptionPane.ERROR_MESSAGE);
+//                }
+//            }
+//
+//        });
 
         setContentPane(editarMeta);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
