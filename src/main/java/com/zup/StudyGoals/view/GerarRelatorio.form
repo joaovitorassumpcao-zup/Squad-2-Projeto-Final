@@ -16,13 +16,13 @@
           <text value="Meta:"/>
         </properties>
       </component>
-      <component id="fd0b" class="javax.swing.JComboBox" binding="metas">
+      <component id="fd0b" class="javax.swing.JComboBox" binding="metasOpcao">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
-      <component id="ccbac" class="javax.swing.JButton" binding="gerarRelatórioButton" default-binding="true">
+      <component id="ccbac" class="javax.swing.JButton" binding="gerarRelatorioButton">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -30,7 +30,7 @@
           <text value="Gerar relatório"/>
         </properties>
       </component>
-      <component id="dbbe" class="javax.swing.JTable" binding="Relatório">
+      <component id="dbbe" class="javax.swing.JTable" binding="relatorioTable">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
