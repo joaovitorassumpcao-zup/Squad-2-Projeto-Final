@@ -29,7 +29,7 @@ public class VerMetas extends JFrame {
     public VerMetas() {
 
         this.setTitle("Ver todas as metas");
-        this.setSize(800, 600);
+        this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLayout(null);
@@ -44,7 +44,7 @@ public class VerMetas extends JFrame {
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setViewportView(table);
-        scrollPane.setBounds(10, 10, 760, 540);
+        scrollPane.setBounds(10, 10, 960, 540);
 
         this.add(scrollPane);
 
