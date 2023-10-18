@@ -29,6 +29,7 @@ public class EditarMeta extends JFrame{
     private ApiClient apiClient;
     private ObjectMapper objectMapper;
     private JPanel editarMeta;
+    private JButton adicionarMaterialNovoButton;
     private JButton adicionarMaterialButton;
     public List<MaterialDeEstudo> materiaisDeEstudo;
 
