@@ -50,10 +50,7 @@ public class CadastrarMeta extends JFrame{
                 meta.setObjetivo(objetivo.getText());
 
                 try{
-                    System.out.println("META ANTES DE SERIALIZAR: " + meta);
                     String jsonBody = objectMapper.writeValueAsString(meta);
-                    System.out.println("META DEPOIS DE SERIALIZAR: " + jsonBody);
-                    System.out.println("JSON A SER ENVIADO: " + jsonBody);
                     RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonBody);
                     apiClient.postRequest(requestBody, "/metas");
                     JOptionPane.showMessageDialog(null,"Meta cadastrada com sucesso! ");
@@ -81,13 +78,7 @@ public class CadastrarMeta extends JFrame{
     }
 
     public void adicionarMaterial (MaterialDeEstudo materialDeEstudo){
-
-        if(materialDeEstudo != null) {
-            this.materiaisDeEstudo.add(materialDeEstudo);
-            System.out.println("Material adicionado: " + materialDeEstudo);
-        }else {
-            System.out.println("MATERIAL NULO");
-        }
+        this.materiaisDeEstudo.add(materialDeEstudo);
     }
 
 }

@@ -72,14 +72,6 @@ public class AdicionarMaterial extends JFrame{
         String inicioMaterial = dataInicio.getText();
         String conclusaoMaterial = dataConclusao.getText();
 
-        //LOG PARA VERIFICAR JSON
-        System.out.println("Titulo: " + tituloMaterial);
-        System.out.println("Categoria: " + categoriaMaterial);
-        System.out.println("URL" + url);
-        System.out.println("Resumo: " + resumoMaterial);
-        System.out.println("Inicio: " + inicioMaterial);
-        System.out.println("Conclusão:" +conclusaoMaterial);
-
         MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(tituloMaterial,categoriaMaterial,urlMaterial,resumoMaterial, inicioMaterial,conclusaoMaterial);
 
         cadastrarMeta.adicionarMaterial(materialDeEstudo);
