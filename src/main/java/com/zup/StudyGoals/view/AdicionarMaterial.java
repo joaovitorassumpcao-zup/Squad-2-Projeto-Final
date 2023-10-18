@@ -2,6 +2,8 @@ package com.zup.StudyGoals.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.zup.StudyGoals.domain.Categoria;
 import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.presentation.apiclient.ApiClient;
@@ -14,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AdicionarMaterial extends JFrame{
     private JTextField titulo;
@@ -32,7 +35,12 @@ public class AdicionarMaterial extends JFrame{
         this.cadastrarMeta = cadastrarMeta;
         this.apiClient = new ApiClient();
         this.objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
+        JavaTimeModule module = new JavaTimeModule();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
+        module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
+        objectMapper.registerModule(module);
+
 
         setContentPane(adicionarMaterial);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

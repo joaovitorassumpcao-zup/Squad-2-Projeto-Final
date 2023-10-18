@@ -54,14 +54,15 @@ public class Meta implements Serializable {
 
     public void adiciona(MaterialDeEstudo materialDeEstudo) {
         this.materiaisDeEstudo.add(materialDeEstudo);
-//        materialDeEstudo.setMetas(this);
-        System.out.println("Adicionando MaterialDeEstudo à Meta: " + materialDeEstudo);
-        System.out.println("MateriaisDeEstudo associados à Meta: " + this.materiaisDeEstudo);
     }
-  
+
+    public void atualizarMateriaisDeEstudo(List<MaterialDeEstudo> novosMateriais) {
+        this.materiaisDeEstudo.clear();
+        this.materiaisDeEstudo.addAll(novosMateriais);
+    }
+
     public List<MaterialDeEstudo> getMateriaisDeEstudo() {
-        List<MaterialDeEstudo> listaSegura = Collections.unmodifiableList(this.materiaisDeEstudo);
-        return listaSegura;
+        return this.materiaisDeEstudo;
     }
 
     public Long getId() {
@@ -112,7 +113,11 @@ public class Meta implements Serializable {
         this.objetivo = objetivo;
     }
 
-    public void setMateriaisDeEstudo(List<MaterialDeEstudo> materiaisDeEstudo) {
-        this.materiaisDeEstudo = materiaisDeEstudo;
+    public void setMateriaisDeEstudo(List<MaterialDeEstudo> novosMateriais) {
+        this.materiaisDeEstudo.clear();
+        if (novosMateriais != null) {
+            this.materiaisDeEstudo.addAll(novosMateriais);
+        }
     }
+
 }
