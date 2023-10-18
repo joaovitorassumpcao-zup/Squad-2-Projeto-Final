@@ -2,6 +2,7 @@ package com.zup.StudyGoals.view;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -49,6 +50,14 @@ public class EditarMeta extends JFrame{
         objectMapper.registerModule(module);
 
         idMeta = pegarIdMeta();
+
+        try {
+            preencherCampos();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
         atualizarMetaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,4 +107,27 @@ public class EditarMeta extends JFrame{
         return Long.parseLong(idMetaString);
     }
 
+    private void preencherCampos() throws IOException {
+        String response = null;
+        try {
+            response = apiClient.getRequest("/metas");
+            List<Meta> metas = objectMapper.readValue(response,
+                    TypeFactory.defaultInstance().constructCollectionType(List.class, Meta.class));
+
+            for (Meta meta : metas) {
+                if (meta.getId() == idMeta) {
+                    assunto.setText(meta.getAssunto());
+                    dataInicio.setText(meta.getDataDeInicio().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
+                    dataFinal.setText(meta.getDataFinal().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
+                    minutos.setText(String.valueOf(meta.getMetaMinutosDia()));
+                    objetivo.setText(meta.getObjetivo());
+                    for (int i = 0; i <= meta.getMateriaisDeEstudo().size(); i++) {
+                        materiaisDeEstudo.set(i, meta.getMateriaisDeEstudo().get(i));
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
