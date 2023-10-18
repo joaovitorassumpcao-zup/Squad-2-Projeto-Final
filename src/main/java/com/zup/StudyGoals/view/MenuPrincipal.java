@@ -9,7 +9,6 @@ public class MenuPrincipal extends JFrame{
     private JButton cadastrarUmaMetaButton;
     private JButton verMetasAtivasButton;
     private JButton verTodasAsMetasButton;
-    private JButton adicionarUmMaterialAButton;
     private JButton deletarUmaMetaButton;
     private JButton gerarRelatorioDeUmaButton;
     private JButton verTodosOsRelatoriosButton;

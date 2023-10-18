@@ -15,15 +15,16 @@ import javax.validation.constraints.NotNull;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GerarRelatorio extends JFrame{
     private JPanel relatorio;
     private JComboBox metasOpcao;
     private JButton gerarRelatorioButton;
-    private JTable relatorioTable;
 
-    private DefaultTableModel tableModel;
+    private Map<String, Meta> assuntoMap = new HashMap<>();
 
     private ApiClient apiClient;
     private ObjectMapper objectMapper;
@@ -35,13 +36,10 @@ public class GerarRelatorio extends JFrame{
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        tableModel = new DefaultTableModel();
-        relatorioTable = new JTable(tableModel);
-
         setContentPane(relatorio);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(400, 300);
+        setSize(400, 100);
         setTitle("Relatório");
 
         //Busca as metas para o comboBox
@@ -61,46 +59,15 @@ public class GerarRelatorio extends JFrame{
         gerarRelatorioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String response1 = null;
 
-                Meta meta = (Meta) metasOpcao.getSelectedItem();
-                assert meta != null;
-                String idMeta = meta.getId().toString();
+                String assunto = (String) metasOpcao.getSelectedItem();
+                Meta metaRelatorio = assuntoMap.get(assunto);
+                assert metaRelatorio != null;
+                String idMeta = metaRelatorio.getId().toString();
                 try {
-                    ResponseBody responseBody = apiClient.postRequest(null, "/relatorios?idMeta=" + idMeta);
+                    ResponseBody responseBody = apiClient.postRequest("/relatorios", "idMeta", idMeta.toString());
 
-                    response1 = apiClient.getRequest("/relatorios");
-                    List<Relatorio> relatorios = objectMapper.readValue(response1,
-                            TypeFactory.defaultInstance().constructCollectionType(List.class, Relatorio.class));
-
-                    tableModel.addColumn("ID");
-                    tableModel.addColumn("ID da Meta");
-                    tableModel.addColumn("Hora do Registro");
-                    tableModel.addColumn("Tempo total (minutos)");
-                    tableModel.addColumn("Média de tempo (minutos)");
-                    tableModel.addColumn("Total de resumos");
-                    tableModel.addColumn("Categoria mais consumida");
-                    tableModel.addColumn("Dias para concluir");
-                    tableModel.addColumn("Meta foi concluída?");
-
-
-                    for (int i = 0; i > relatorios.size(); i++) {
-                        if (relatorios.get(i).getId() == i + 1) {
-                            Object[] rowData = {relatorios.get(i).getId(),
-                                    relatorios.get(i).getMetaId(),
-                                    relatorios.get(i).getHoraRegistro(),
-                                    relatorios.get(i).getTempoTotal(),
-                                    relatorios.get(i).getMediaTempo(),
-                                    relatorios.get(i).getTotalResumos(),
-                                    relatorios.get(i).getCategoriaMaisConsumida(),
-                                    relatorios.get(i).getDiasParaConcluir(),
-                                    relatorios.get(i).isMetaConcluida()};
-
-                            tableModel.addRow(rowData);
-                        }
-                    }
-
-                    tableModel.fireTableDataChanged();
+                    VerRelatorioGerado verRelatorioGerado = new VerRelatorioGerado();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -111,6 +78,9 @@ public class GerarRelatorio extends JFrame{
     }
 
     private void preencherComboBox(@NotNull List<Meta> metas) {
-        metas.forEach(meta -> metasOpcao.addItem(meta.getId() + " - " + meta.getAssunto()));
+        for(Meta meta : metas) {
+            metasOpcao.addItem(meta.getAssunto());
+            assuntoMap.put(meta.getAssunto(), meta);
+        }
     }
 }
