@@ -121,9 +121,10 @@ public class EditarMeta extends JFrame{
                     dataFinal.setText(meta.getDataFinal().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
                     minutos.setText(String.valueOf(meta.getMetaMinutosDia()));
                     objetivo.setText(meta.getObjetivo());
-                    for (int i = 0; i <= meta.getMateriaisDeEstudo().size(); i++) {
-                        materiaisDeEstudo.set(i, meta.getMateriaisDeEstudo().get(i));
-                    }
+
+                    materiaisDeEstudo.clear();
+
+                    materiaisDeEstudo.addAll(meta.getMateriaisDeEstudo());
                 }
             }
         } catch (IOException e) {
