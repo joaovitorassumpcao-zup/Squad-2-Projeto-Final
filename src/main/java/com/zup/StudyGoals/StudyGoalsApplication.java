@@ -8,10 +8,12 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
+@EnableWebMvc
 @SpringBootApplication
 public class StudyGoalsApplication {
 
@@ -21,7 +23,7 @@ public class StudyGoalsApplication {
 		ConfigurableApplicationContext context = new SpringApplicationBuilder(StudyGoalsApplication.class)
 				.headless(false)
 				.run(args);
-		MenuPrincipal appFrame = context.getBean(MenuPrincipal.class);
+		context.getBean(MenuPrincipal.class);
 	}
 
 }
