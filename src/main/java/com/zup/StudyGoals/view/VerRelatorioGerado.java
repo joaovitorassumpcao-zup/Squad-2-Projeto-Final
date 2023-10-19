@@ -72,7 +72,6 @@ public class VerRelatorioGerado extends JFrame {
         }
     }
     private void preencherTabelaComDados(List<Relatorio> relatorios) {
-        tableModel.addColumn("ID");
         tableModel.addColumn("ID da Meta");
         tableModel.addColumn("Hora do Registro");
         tableModel.addColumn("Tempo total (minutos)");
@@ -86,7 +85,7 @@ public class VerRelatorioGerado extends JFrame {
 
         Relatorio relatorio = relatorios.get(relatorios.size() - 1);
 
-            Object[] rowData = {relatorio.getId(),
+            Object[] rowData = {
                     relatorio.getMetaId(),
                     relatorio.getHoraRegistro(),
                     relatorio.getTempoTotal(),
@@ -94,7 +93,8 @@ public class VerRelatorioGerado extends JFrame {
                     relatorio.getTotalResumos(),
                     relatorio.getCategoriaMaisConsumida(),
                     relatorio.getDiasParaConcluir(),
-                    relatorio.isMetaConcluida()};
+                    relatorio.isMetaConcluida()
+            };
 
             tableModel.addRow(rowData);
 

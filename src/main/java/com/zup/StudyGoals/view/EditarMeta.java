@@ -74,10 +74,10 @@ public class EditarMeta extends JFrame{
                     String jsonBody = objectMapper.writeValueAsString(metaEditada);
                     RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),jsonBody);
                     ResponseBody responseBody = apiClient.putRequest(requestBody,"/metas/" + idMeta);
-                    JOptionPane.showMessageDialog(null,"Meta cadastrada com sucesso! ");
+                    JOptionPane.showMessageDialog(null,"Meta editada com sucesso!");
                 }catch (IOException | NumberFormatException exception){
                     exception.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Erro ao editar a meta! ", "ERRO",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Erro ao editar a meta!", "ERRO",JOptionPane.ERROR_MESSAGE);
                 }
             }
 

@@ -39,7 +39,7 @@ public class GerarRelatorio extends JFrame{
         setContentPane(relatorio);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setSize(400, 100);
+        setSize(400, 150);
         setTitle("Relatório");
 
         //Busca as metas para o comboBox
