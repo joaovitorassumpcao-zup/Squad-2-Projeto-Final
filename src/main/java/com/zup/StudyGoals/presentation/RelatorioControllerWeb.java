@@ -47,7 +47,6 @@ public class RelatorioControllerWeb {
     //Gera o relatório atual da meta selecionada ( /api/relatorios?id=1 ) e salva no banco de dados
     @PostMapping
     public ResponseEntity<?> cadastrarRelatorio(@RequestParam Long idMeta) {
-
         LocalDateTime horaRegistro = LocalDateTime.now();
         double tempoTotal = relatorioService.calcularTempoTotalDedicado(idMeta);
         double mediaTempo = relatorioService.calcularMediaTempoDiaria(idMeta);
