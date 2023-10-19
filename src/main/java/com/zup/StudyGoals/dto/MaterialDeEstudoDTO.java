@@ -20,7 +20,6 @@ public class MaterialDeEstudoDTO implements Serializable {
     private LocalDateTime dataInicio;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime dataConclusao;
-    private Meta metas;
 
     public MaterialDeEstudoDTO (MaterialDeEstudo materialDeEstudo){
         this.id = materialDeEstudo.getId();
@@ -30,7 +29,6 @@ public class MaterialDeEstudoDTO implements Serializable {
         this.resumo = materialDeEstudo.getResumo();
         this.dataInicio = materialDeEstudo.getDataInicio();
         this.dataConclusao = materialDeEstudo.getDataConclusao();
-        //this.metas = materialDeEstudo.getMetas();
     }
 
     public MaterialDeEstudoDTO (){
@@ -92,10 +90,17 @@ public class MaterialDeEstudoDTO implements Serializable {
     public void setDataConclusao(LocalDateTime dataConclusao) {
         this.dataConclusao = dataConclusao;
     }
-    public Meta getMetas() {
-        return metas;
-    }
-    public void setMetas(Meta metas) {
-        this.metas = metas;
+
+    @Override
+    public String toString() {
+        return "MaterialDeEstudoDTO{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", categoria=" + categoria +
+                ", url='" + url + '\'' +
+                ", resumo='" + resumo + '\'' +
+                ", dataInicio=" + dataInicio +
+                ", dataConclusao=" + dataConclusao +
+                '}';
     }
 }

@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "TB_RELATORIOS")
-@Getter
-@Setter
+//@Getter
+//@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Relatorio implements Serializable {
@@ -47,4 +47,76 @@ public class Relatorio implements Serializable {
 
     @Column(nullable = false)
     private Long metaId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getHoraRegistro() {
+        return horaRegistro;
+    }
+
+    public void setHoraRegistro(LocalDateTime horaRegistro) {
+        this.horaRegistro = horaRegistro;
+    }
+
+    public double getTempoTotal() {
+        return tempoTotal;
+    }
+
+    public void setTempoTotal(double tempoTotal) {
+        this.tempoTotal = tempoTotal;
+    }
+
+    public double getMediaTempo() {
+        return mediaTempo;
+    }
+
+    public void setMediaTempo(double mediaTempo) {
+        this.mediaTempo = mediaTempo;
+    }
+
+    public int getTotalResumos() {
+        return totalResumos;
+    }
+
+    public void setTotalResumos(int totalResumos) {
+        this.totalResumos = totalResumos;
+    }
+
+    public String getCategoriaMaisConsumida() {
+        return categoriaMaisConsumida;
+    }
+
+    public void setCategoriaMaisConsumida(String categoriaMaisConsumida) {
+        this.categoriaMaisConsumida = categoriaMaisConsumida;
+    }
+
+    public int getDiasParaConcluir() {
+        return diasParaConcluir;
+    }
+
+    public void setDiasParaConcluir(int diasParaConcluir) {
+        this.diasParaConcluir = diasParaConcluir;
+    }
+
+    public boolean isMetaConcluida() {
+        return metaConcluida;
+    }
+
+    public void setMetaConcluida(boolean metaConcluida) {
+        this.metaConcluida = metaConcluida;
+    }
+
+    public Long getMetaId() {
+        return metaId;
+    }
+
+    public void setMetaId(Long metaId) {
+        this.metaId = metaId;
+    }
 }

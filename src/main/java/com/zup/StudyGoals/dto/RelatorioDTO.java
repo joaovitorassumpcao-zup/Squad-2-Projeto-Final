@@ -12,6 +12,7 @@ public class RelatorioDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
     private LocalDateTime horaRegistro;
 
     double tempoTotal;
@@ -41,6 +42,7 @@ public class RelatorioDTO implements Serializable {
     }
 
     public RelatorioDTO (Relatorio relatorio) {
+        this.id = relatorio.getId();
         this.horaRegistro = relatorio.getHoraRegistro();
         this.tempoTotal = relatorio.getTempoTotal();
         this.mediaTempo = relatorio.getMediaTempo();
@@ -57,6 +59,9 @@ public class RelatorioDTO implements Serializable {
 
     //Getters
 
+    public Long getId() {
+        return id;
+    }
     public LocalDateTime getHoraRegistro() {
         return horaRegistro;
     }
@@ -91,6 +96,10 @@ public class RelatorioDTO implements Serializable {
 
     //Setters
 
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public void setHoraRegistro(LocalDateTime horaRegistro) {
         this.horaRegistro = horaRegistro;
     }

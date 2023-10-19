@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.asm.Advice;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -40,14 +42,14 @@ public class MaterialDeEstudo implements Serializable {
     @Column(nullable = false)
     private LocalDateTime dataConclusao;
 
-    public MaterialDeEstudo(Long id, String titulo, Categoria categoria, String url, String resumo, LocalDateTime dataInicio, LocalDateTime dataConclusao, Meta meta) {
+    public MaterialDeEstudo(String titulo, Categoria categoria, String url, String resumo, String dataInicio, String dataConclusao) {
+        this.titulo = titulo;
+        this.categoria = categoria;
+        this.url = url;
+        this.resumo = resumo;
+        this.dataInicio = LocalDateTime.parse(dataInicio);
+        this.dataConclusao = LocalDateTime.parse(dataConclusao);
     }
-
-
-//
-//    public boolean materialTemUmaMeta (Meta meta){
-//        return this.metas != null && this.metas.equals(meta);
-//    }
 
     public Long getId() {
         return id;
@@ -105,5 +107,16 @@ public class MaterialDeEstudo implements Serializable {
         this.dataConclusao = dataConclusao;
     }
 
-
+    @Override
+    public String toString() {
+        return "MaterialDeEstudo{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", categoria=" + categoria +
+                ", url='" + url + '\'' +
+                ", resumo='" + resumo + '\'' +
+                ", dataInicio=" + dataInicio +
+                ", dataConclusao=" + dataConclusao +
+                '}';
+    }
 }

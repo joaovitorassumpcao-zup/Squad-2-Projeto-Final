@@ -114,7 +114,7 @@ class MetaControllerWebTest {
     @Test
     void testeAlterarMeta() throws Exception{
 
-            MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"),meta);
+            MaterialDeEstudo materialDeEstudo = new MaterialDeEstudo(1L, "Verbo to be", Categoria.VIDEO, "https://www.youtube.com", "Lorem ipsum",LocalDateTime.parse("2023-10-20T08:00:00"), LocalDateTime.parse("2023-10-20T08:00:00"));
             List<MaterialDeEstudo> listaMaterial = new ArrayList<>();
             listaMaterial.add(materialDeEstudo);
 

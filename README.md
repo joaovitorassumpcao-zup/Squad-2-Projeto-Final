@@ -7,7 +7,10 @@ Projeto em Java de gerenciador de metas de estudo. Adicione metas a serem cumpri
 - Java 11;
 - Maven;
 - Spring Framework;
-- H2 Database.
+- H2 Database;
+- PostGreSQL;
+- OkHttp;
+- JFrame.
 
 ## Como Executar
 
@@ -26,7 +29,7 @@ Projeto em Java de gerenciador de metas de estudo. Adicione metas a serem cumpri
 3. **Execução do Aplicativo:**
    Inicie o aplicativo:
    ```bash
-   java -jar target/nome-do-arquivo.jar
+   java -jar target/StudyGoals-0.0.1-SNAPSHOT.jar
    ```
 
 4. **Acesso à API:**
@@ -37,6 +40,7 @@ Projeto em Java de gerenciador de metas de estudo. Adicione metas a serem cumpri
 - **P.O:** Thiago Amarante
 -  **Tech Lead:** Carolina De Carvalho Queiroz
 - **Scrum Master:** Joyce Olympio Fonseca e Carolina De Carvalho Queiroz
+- 
   **Desenvolvimento:**
 - Elizabeth Cristina Maradei Oliveira
 - Joao Vitor Cunha Assumpcao

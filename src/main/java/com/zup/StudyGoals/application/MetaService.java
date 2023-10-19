@@ -23,22 +23,22 @@ public class MetaService {
     MaterialDeEstudoRepository materialDeEstudoRepository;
 
     // método para listar todas as metas
-    public List<MetaDTO> listarMetas(){
+    public List<MetaDTO> listarMetas() {
 
         List<Meta> metas = metaRepository.findAll();
         List<MetaDTO> metasDTOS = new ArrayList<>();
 
-        for (Meta meta : metas){
+        for (Meta meta : metas) {
             metasDTOS.add(new MetaDTO(meta));
         }
         return metasDTOS;
     }
 
     // método para buscar meta por id
-    public Optional<MetaDTO> buscarMetaPorId(Long id){
+    public Optional<MetaDTO> buscarMetaPorId(Long id) {
         Optional<Meta> meta = metaRepository.findById(id);
 
-        if(meta.isPresent()) return Optional.of(new MetaDTO(meta.get()));
+        if (meta.isPresent()) return Optional.of(new MetaDTO(meta.get()));
 
         return Optional.empty();
     }
@@ -56,30 +56,34 @@ public class MetaService {
     }
 
     // método para editar metas
-    public Meta editarMeta(Long id, Meta metas){
+    public Meta editarMeta(Long id, Meta metas) {
         Meta meta = metaRepository.findById(id).get();
 
-        if(meta != null){
+        if (meta != null) {
             meta.setAssunto(metas.getAssunto());
         }
-        if(meta != null){
+        if (meta != null) {
             meta.setDataDeInicio(metas.getDataDeInicio());
         }
-        if(meta != null){
+        if (meta != null) {
             meta.setDataFinal(metas.getDataFinal());
         }
-        if(meta != null){
+        if (meta != null) {
             meta.setMetaMinutosDia(metas.getMetaMinutosDia());
         }
-        if(meta != null){
+        if (meta != null) {
             meta.setObjetivo(metas.getObjetivo());
         }
+        if (meta != null) {
+            meta.atualizarMateriaisDeEstudo(metas.getMateriaisDeEstudo());
+        }
+            return metaRepository.save(meta);
+        }
 
-        return metaRepository.save(meta);
-    }
 
-    //método para deletar meta
-    public void deletarMeta(Long id){
-        metaRepository.deleteById(id);
-    }
+        //método para deletar meta
+        public void deletarMeta (Long id){
+            metaRepository.deleteById(id);
+        }
 }
+

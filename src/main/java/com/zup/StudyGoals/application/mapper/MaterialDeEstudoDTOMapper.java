@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface MaterialDeEstudoDTOMapper {
     MaterialDeEstudoDTOMapper INSTANCE = Mappers.getMapper(MaterialDeEstudoDTOMapper.class);
-    MaterialDeEstudoDTO materialDeEstudoParaDTO(MaterialDeEstudo materialDeEstudo);
-    @Mapping(target = "id", ignore = true)
-    MaterialDeEstudo DTOParaMaterialDeEstudo(MaterialDeEstudoDTO materialDeEstudoDTO);
+//    MaterialDeEstudoDTO materialDeEstudoParaDTO(MaterialDeEstudo materialDeEstudo);
+//    @Mapping(target = "id", ignore = true)
+//    MaterialDeEstudo DTOParaMaterialDeEstudo(MaterialDeEstudoDTO materialDeEstudoDTO);
 }

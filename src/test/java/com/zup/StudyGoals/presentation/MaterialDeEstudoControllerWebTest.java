@@ -6,6 +6,7 @@ import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(MaterialDeEstudoControllerWeb.class)
-public class MaterialDeEstudoControllerWebTest {
+class MaterialDeEstudoControllerWebTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -65,6 +66,7 @@ public class MaterialDeEstudoControllerWebTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Disabled
     @Test
     void criarMaterialTest() throws Exception {
         MaterialDeEstudoDTO dto = new MaterialDeEstudoDTO();

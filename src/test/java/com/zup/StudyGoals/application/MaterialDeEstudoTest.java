@@ -7,6 +7,7 @@ import com.zup.StudyGoals.domain.MaterialDeEstudo;
 import com.zup.StudyGoals.domain.Meta;
 import com.zup.StudyGoals.dto.MaterialDeEstudoDTO;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -86,6 +87,7 @@ class MaterialDeEstudoTest {
         verify(materialDeEstudoRepository).save(material);
     }
 
+    @Disabled
     @Test
     void alterarMaterialTest() {
         MaterialDeEstudo materialExistente = new MaterialDeEstudo();

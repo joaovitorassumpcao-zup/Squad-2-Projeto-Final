@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 public interface MetaDTOMapper {
     MetaDTOMapper INSTANCE = Mappers.getMapper(MetaDTOMapper.class);
 
-    MetaDTO metaParaDTO(Meta meta);
-    @Mapping(target = "id", ignore = true)
-    Meta DTOParaMeta(MetaDTO metaDTO);
+//    MetaDTO metaParaDTO(Meta meta);
+//    @Mapping(target = "id", ignore = true)
+//    Meta DTOParaMeta(MetaDTO metaDTO);
 }
