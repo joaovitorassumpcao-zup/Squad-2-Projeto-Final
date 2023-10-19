@@ -1,10 +1,15 @@
 package com.zup.StudyGoals.view;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuPrincipal extends JFrame{
+@Component
+public class MenuPrincipal extends JFrame implements CommandLineRunner {
     private JPanel menu;
     private JButton cadastrarUmaMetaButton;
     private JButton verMetasAtivasButton;
@@ -16,8 +21,18 @@ public class MenuPrincipal extends JFrame{
     private JButton editarUmaMetaButton;
     private JButton verMateriaisDeEstudoButton;
 
-    public static void main(String[] args) {
-        MenuPrincipal menuPrincipal = new MenuPrincipal();
+    @Override
+    public void run(String... arg0) throws Exception {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    MenuPrincipal frame = new MenuPrincipal();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public MenuPrincipal() {
@@ -31,7 +46,7 @@ public class MenuPrincipal extends JFrame{
         setSize(350, 360);
         setTitle("Menu Principal");
         setResizable(false);
-        setVisible(true);
+        //setVisible(true);
 
 
         cadastrarUmaMetaButton.addActionListener(new ActionListener() {
