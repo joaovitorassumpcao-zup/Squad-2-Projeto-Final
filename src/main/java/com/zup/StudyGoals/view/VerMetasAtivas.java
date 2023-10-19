@@ -81,7 +81,7 @@ public class VerMetasAtivas extends JFrame {
         tableModel.setRowCount(0);
 
         for (Relatorio relatorio : relatorios) {
-            if (relatorio.isMetaConcluida()) {
+            if (!relatorio.isMetaConcluida()) {
             Object[] rowData = {
                     relatorio.getMetaId(),
                     relatorio.getHoraRegistro(),
