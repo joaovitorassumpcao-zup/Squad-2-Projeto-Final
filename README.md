@@ -7,7 +7,10 @@ Projeto em Java de gerenciador de metas de estudo. Adicione metas a serem cumpri
 - Java 11;
 - Maven;
 - Spring Framework;
-- H2 Database.
+- H2 Database;
+- PostGreSQL;
+- OkHttp;
+- JFrame.
 
 ## Como Executar
 
